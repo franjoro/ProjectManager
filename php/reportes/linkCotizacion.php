@@ -39,16 +39,16 @@ $datos = mysqli_fetch_array($queryClient);
     <div class="container invoice ">
         <div class="invoice-header ">
             <div class="row">
-                <div class="col-xs-8">
-                    <h1>Service Invoice</h1>
-                    <h4 class="text-muted">NO: <?php echo $datos[0] ?> | <?php echo date("d/m/Y") ?> </h4>
-                </div>
-                <div class="col-xs-4">
+                <div class="col-xs-7">
                     <div class="media">
                         <div class="media-left">
                             <img class="media-object logo" src="logo.png" />
                         </div>
                     </div>
+                </div>
+                <div class="col-xs-5">
+                    <h1>Estimate Contracts</h1>
+                    <h4 class="text-muted">NO: <?php echo $datos[0] ?> | <?php echo date("d/m/Y") ?> </h4>
                 </div>
             </div>
         </div>
@@ -183,7 +183,7 @@ $datos = mysqli_fetch_array($queryClient);
                     </tbody>
                 </table>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-xs-7">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -207,7 +207,7 @@ $datos = mysqli_fetch_array($queryClient);
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
         </div>

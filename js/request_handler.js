@@ -408,7 +408,7 @@ let banderaDownProo = false;
 
 let contador = 1;
 imprimirFila(contador, true);
-//SELECT DE PROYECTO MAteriales
+//SELECT DE PROYECTO Materiales
 let CostosBool = false;
 $("#ProjectSelectorCostos")
   .hover(() => {
@@ -591,10 +591,11 @@ $("#rowsC")
     if (ProjectSelectorCtciones == "x")
       return alert("Debe Seleccionar proyecto");
     const NewP = $("#generico").val();
+    const NewCliente = $("#clienteSelectNew").children("option:selected").val();
     const serializedData = $(this).serialize();
 
     $.ajax({
-      url: `php/cotizaciones/insert.php?contador=${contador}&proyectoId=${ProjectSelectorCtciones}&generico=${NewP}`,
+      url: `php/cotizaciones/insert.php?contador=${contador}&proyectoId=${ProjectSelectorCtciones}&generico=${NewP}&cliente=${NewCliente}`,
       type: "post",
       data: serializedData,
       //   beforeSend: () => {
@@ -619,20 +620,20 @@ $("#rowsC")
         });
       });
 
-      const ShowCoti = new Promise((resolve, reject) => {
-        $.ajax({
-          url: "php/cotizaciones/ObtenerCotizaciones.php",
-          data: { cliente: ProjectSelectorCtciones },
-        }).done((data) => {
-          $(".materialesDiv").css("display", "flex");
-          $("#btnAddMaterial").removeClass("invisible").addClass("visible");
-          $("#tablaMateriales").html(data);
-          $("#dataTable").DataTable();
-          resolve();
-        });
-      });
+      // const ShowCoti = new Promise((resolve, reject) => {
+      //   $.ajax({
+      //     url: "php/cotizaciones/ObtenerCotizaciones.php",
+      //     data: { cliente: ProjectSelectorCtciones },
+      //   }).done((data) => {
+          $(".materialesDiv").css("display", "nonre");
+          $("#btnAddMaterial").removeClass("visible").addClass("invisible");
+      //     $("#tablaMateriales").html(data);
+      //     $("#dataTable").DataTable();
+      //     resolve();
+      //   });
+      // });
 
-      Promise.all([select, ShowCoti]).then(AlertaExito());
+      Promise.all([select]).then(AlertaExito());
     });
   })
   .on("click", ".BtnRowErase", function () {
@@ -640,6 +641,25 @@ $("#rowsC")
     contador = contador - 1;
     $(".turno" + contadorDeturno).remove();
   });
+//SELECT DE CLIENTES
+let bClt = false;
+$("#clienteSelectNew").hover(() => {
+  if (bClt) return;
+  $.ajax({
+    url: "php/proyecto/ObtenerClientes.php",
+  }).done((data) => {
+    bClt = true;
+    $("#clienteSelectNew").html(data);
+  });
+});
+
+// SELECT DE TIPO  DE PROYECTO
+$("#KindPro").change(()=>{
+  const valor = $("#KindPro").children("option:selected").val();
+  const mesActual = ("0" + (new Date().getMonth() + 1)).slice(-2);
+  const NombreNuevoProyecto = $("#generico").val(valor+mesActual);
+} );
+
 //SELECT de proyectos
 let bPCtz = false;
 $("#ProjectSelectorCtciones")
@@ -658,9 +678,16 @@ $("#ProjectSelectorCtciones")
       .val();
     if (selectedProject == 0) {
       $("#newInput").removeClass("invisible").addClass("visible");
+      $("#newCliente").removeClass("invisible").addClass("visible");
+      $("#newKind").removeClass("invisible").addClass("visible");
+
     } else {
       $("#newInput").removeClass("visible").addClass("invisible");
+      $("#newCliente").removeClass("visible").addClass("invisible");
+      $("#newKind").removeClass("visible").addClass("invisible");
+
     }
+
     $.ajax({
       url: "php/cotizaciones/ObtenerCotizaciones.php",
       data: { cliente: selectedProject },
@@ -670,6 +697,9 @@ $("#ProjectSelectorCtciones")
       $("#tablaMateriales").html(data);
       $("#dataTable").DataTable();
     });
+
+
+
   });
 
 //Eliminar Ctz

@@ -217,11 +217,29 @@ include("./php/conexion.php")
                   <option>Loading</option>
                 </select>
               </div>
+              <div class="form-group col-md-2 invisible" id="newCliente">
+                <label>Cliente</label>
+                <select class="form-control" name="clienteSelectNew" id="clienteSelectNew">
+                  <option selected disabled>Loading...</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2 invisible" id="newKind">
+                <label>Tipo de proyecto</label>
+                <select class="form-control" name="KindPro" id="KindPro">
+                  <option selected disabled>Select Project Mask</option>
+                  <option value="RSIN">Residential + IN</option>
+                  <option value="RSEX">Residential + EX</option>
+                  <option value="STIN">Strata + IN </option>
+                  <option value="STEX">Strata + EX</option>
+                  <option value="COIN">Comercial + IN</option>
+                  <option value="COEX">Comercial + EX</option>
+                </select>
+              </div>
               <div class="form-group col-md-2 invisible " id="newInput">
                 <label>Nombre de proyecto</label>
                 <input type="text" class="form-control" id="generico" name="generico">
               </div>
-              <div class="form-group col-md-8 ">
+              <div class="form-group col-md-6 ">
               </div>
           </form>
         </div>

@@ -2,7 +2,7 @@
 
 <?php
 require_once("../conexion.php");
-$sql= "SELECT code, name FROM tb_clientes";
+$sql= "SELECT code, name FROM tb_clientes WHERE code !='0' ";
 $query = mysqli_query($mysqli, $sql);
 
 while ($row = mysqli_fetch_array($query)) {

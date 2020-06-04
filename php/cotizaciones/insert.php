@@ -7,11 +7,13 @@ $total = $_POST['total']; //arreglo
 $proyectoId = $_GET['proyectoId'];
 $c = $_GET['contador'];
 $ProyectName = $_GET['generico']; //single
+$cliente = $_GET['cliente']; //single
+
 
 
 
 if($proyectoId == 0 ){
-    $sql = "INSERT INTO tb_proyectos(name,cliente,propiedad) VALUES('". $ProyectName."', '0','0' )  ";
+    $sql = "INSERT INTO tb_proyectos(name,cliente,propiedad) VALUES('". $ProyectName."', '$cliente','0' )  ";
     $query = mysqli_query($mysqli,$sql);
     $id = mysqli_insert_id($mysqli);
     for ($i = 0; $i < $c; $i++) {
