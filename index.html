@@ -107,8 +107,11 @@
           data: serializedData,
           type: "POST",
         }).done((data) => {
+          console.log(data)
           if(data === 'NotAccess') { return badpass()};
           if(data === 'ok') { return window.location.href = 'dashboard.html' };
+          if(data === 'okE') { return window.location.href = './empleados/' };
+
           
         });
       });
