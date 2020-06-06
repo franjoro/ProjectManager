@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(isset($_SESSION['code'])){ 
+include("./php/conexion.php")
+?>  
   <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -761,3 +766,8 @@
     <script src="js/demo/chart-pie-demo.js"></script>
   </body>
 </html>
+<?php 
+} else { 
+    header("location:php/destroy.php");
+}
+?>

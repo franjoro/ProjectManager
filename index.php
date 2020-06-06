@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if(isset($_SESSION['code']) ){
+    session_destroy();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -109,7 +115,7 @@
         }).done((data) => {
           console.log(data)
           if(data === 'NotAccess') { return badpass()};
-          if(data === 'ok') { return window.location.href = 'dashboard.html' };
+          if(data === 'ok') { return window.location.href = 'dashboard.php' };
           if(data === 'okE') { return window.location.href = './empleados/' };
 
           

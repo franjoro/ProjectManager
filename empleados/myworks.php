@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(isset($_SESSION['code'])){ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,3 +76,8 @@ session_start();
 </body>
 
 </html>
+<?php 
+} else { 
+    header("location:php/destroy.php");
+}
+?>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+if(isset($_SESSION['code'])){ 
 include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
@@ -368,3 +370,8 @@ include("./php/conexion.php")
 </body>
 
 </html>
+<?php 
+} else { 
+    header("location:php/destroy.php");
+}
+?>

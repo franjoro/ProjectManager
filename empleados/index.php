@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(isset($_SESSION['code'])){ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +34,7 @@ session_start();
 ?> </span></a>
                 </li>
                  <li class="nav-item ">
-                    <a class="nav-link" href="../">Logout</a>
+                    <a class="nav-link" href="php/destroy.php">Logout</a>
                 </li>  
 
             </ul>
@@ -88,3 +89,8 @@ Instructions: You must select the project and entry time, then the departure tim
 </body>
 
 </html>
+<?php 
+} else { 
+    header("location:php/destroy.php");
+}
+?>

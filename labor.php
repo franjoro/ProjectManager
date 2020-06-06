@@ -1,22 +1,25 @@
 <?php
 session_start();
-if(isset($_SESSION['code'])){ 
-include("./php/conexion.php")
+if (isset($_SESSION['code'])) {
+    include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
+
   <title>Project Manager</title>
+
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
 </head>
@@ -52,7 +55,7 @@ include("./php/conexion.php")
         Administración
       </div>
 
-      <li class="nav-item active">
+      <li class="nav-item ">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
           <i class="fas fa-briefcase"></i>
           <span>Proyectos</span>
@@ -60,14 +63,14 @@ include("./php/conexion.php")
         <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Administrar</h6>
-            <a class="collapse-item active" href="proyectos.php">Gestión proyectos</a>
+            <a class="collapse-item " href="proyectos.php">Gestión proyectos</a>
             <a class="collapse-item" href="materiales.php">Administrar costos</a>
             <a class="collapse-item" href="reportes.php">Reportes</a>
 
           </div>
         </div>
       </li>
-      <li class="nav-item  ">
+      <li class="nav-item">
         <a class="nav-link" href="cotizaciones.php">
           <i class="fas fa-file-invoice-dollar"></i>
           <span>Cotizaciones</span></a>
@@ -80,7 +83,7 @@ include("./php/conexion.php")
         Datos previos
       </div>
       <!-- Nav Item - Charts -->
-      <li class="nav-item ">
+      <li class="nav-item active">
         <a class="nav-link" href="clientes.php">
           <i class="fas fa-user-tie"></i>
           <span>Clientes</span></a>
@@ -126,12 +129,6 @@ include("./php/conexion.php")
       </div>
     </ul>
     <!-- End of Sidebar -->
-
-
-
-
-
-
 
 
 
@@ -198,72 +195,13 @@ include("./php/conexion.php")
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Proyectos</h1>
+          <h1 class="h3 mb-4 text-gray-800">Horas laborales</h1>
           <div class="row">
-            <!-- Content Column -->
-            <div class="col-lg-5 mb-4">
-              <!-- Project Card Example -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Agregar nuevo proyecto /
-                    codigo de proyecto: <span style="color: black;">ABC</span>
-                  </h6>
-                </div>
-                <div class="card-body">
-                  <form id="ProyectosForm">
-                    <div class="form-group">
-                      <label for="inputAddress">Name Project*</label>
-                      <input type="text" required class="form-control" id="name" name="name" placeholder="Name...">
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col-md-6">
-                        <label for="inputEmail4">Client</label>
-                        <select class="form-control" id="client" name="client">
-                          <option disabled selected>Select Client</option>
-                          <option disabled>Loading...</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="inputEmail4">Property</label>
-                        <select class="form-control" disabled id="ProyectoSelectPropiedades" name="ProyectoSelectPropiedades">
-                          <option disabled selected>Seleccionar cliente</option>
-                          <option disabled>Loading...</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col-md-4">
-                        <label for="inputEmail4">Suite Number</label>
-                        <input type="text" class="form-control" name="suite">
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label for="inputPassword4">Start Date</label>
-                        <input type="text" class="form-control" name="start" id="start">
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label for="inputPassword4">End Date</label>
-                        <input type="text" class="form-control" name="end" id="end">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputAddress2">Notes</label>
-                      <textarea class="form-control" placeholder="Something to say..." name="notes"></textarea>
-                    </div>
-
-                    <button id="New_button" type="submit" class="btn btn-primary visible">Registrar</button>
-                  </form>
-                  <button id="loader" class="btn btn-primary invisible" disabled>
-                    <span class="spinner-border spinner-border-sm" id="loader" role="status" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-7 mb-4">
-              <!-- Illustrations -->
+            <div class="col-lg-6 mb-4">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
-                    Illustrations
+                    Clientes actuales
                   </h6>
                 </div>
                 <div class="card-body">
@@ -272,13 +210,29 @@ include("./php/conexion.php")
                   </div>
                 </div>
               </div>
-              <!-- Approach -->
+            </div>
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Horas laboradas
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <div id="labortable">
+                        <p>Seleccione empleado para ver horas laboradas</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <!-- /.container-fluid -->
       </div>
       <!-- End of Main Content -->
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
@@ -333,54 +287,43 @@ include("./php/conexion.php")
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <!-- <script src="js/jquery.mask.js"></script> -->
   <script src="js/demo/datatables-demo.js"></script>
+
+
+  <!-- all my things -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-  <script src="js/request_handler.js"></script>
 
   <script>
+    const getTableEm = () =>{
+        $.ajax({
+            url:"php/empleados/tablatolabor.php"
+        }).done( data=>{
+            $("#clientTable").html(data)
+            $("#dataTable").DataTable();
+        } )
+    }
+
+    const showlabor = id =>{
+        $.ajax({
+            url:"php/empleados/labor.php?id="+id
+        }).done( data=>{
+            $("#labortable").html(data)
+            $("#myTable").DataTable();
+        } )
+    }
+
     $(document).ready(function() {
-      tablaProyecto();
-
-
-      var from = $("#start")
-        .datepicker({
-          dateFormat: "dd/mm/yy",
-          minDate: 0,
-          changeMonth: true
-        })
-        .on("change", function() {
-          to.datepicker("option", "minDate", getDate(this));
-        }),
-        to = $("#end").datepicker({
-          dateFormat: "dd/mm/yy",
-          changeMonth: true
-        })
-        .on("change", function() {
-          from.datepicker("option", "maxDate", getDate(this));
-        });
-
-      function getDate(element) {
-        var date;
-        var dateFormat = "dd/mm/yy";
-        try {
-          date = $.datepicker.parseDate(dateFormat, element.value);
-        } catch (error) {
-          date = null;
-        }
-
-        return date;
-      }
-
+     getTableEm()
     })
   </script>
+
+
 </body>
 
 </html>
-<?php 
-} else { 
+<?php
+} else {
     header("location:php/destroy.php");
 }
 ?>
