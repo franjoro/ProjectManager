@@ -83,7 +83,7 @@ if (isset($_SESSION['code'])) {
         Datos previos
       </div>
       <!-- Nav Item - Charts -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="clientes.php">
           <i class="fas fa-user-tie"></i>
           <span>Clientes</span></a>
@@ -109,7 +109,7 @@ if (isset($_SESSION['code'])) {
         Empleados
       </div>
 
-      <li class="nav-item ">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-users-cog"></i>
           <span>Colaboradores</span>
@@ -118,7 +118,7 @@ if (isset($_SESSION['code'])) {
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Administrar</h6>
             <a class="collapse-item " href="empleados.php">Empleados</a>
-            <a class="collapse-item" href="buttons.html">Horas de trabajo</a>
+            <a class="collapse-item active" href="buttons.html">Horas de trabajo</a>
           </div>
         </div>
       </li>

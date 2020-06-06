@@ -53,7 +53,7 @@ if(!$query){
 
 <div class="row">
     <div class="col-6">
-        <a href="php/reportes/linkCotizacion.php?projectCode=<?php echo $cliente ?>"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Ver a detalle</button></a>
+        <a href="php/reportes/consolidadoProyecto.php?projectCode=<?php echo $cliente ?>"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Ver a detalle</button></a>
     </div>
     <div class="col-6">
         <hr>
