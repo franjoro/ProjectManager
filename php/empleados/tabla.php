@@ -20,12 +20,10 @@
         <td><?php echo $row[2] ?></td>
         <td><?php echo $row[3] ?></td>
         <td><?php echo $row[4] ?></td>
-
-
         <td>
           <button class="btn"><i class="far fa-eye"></i></button>
           <button class="btn"><i class="far fa-edit"></i></i></button>
-          <button class="btn"><i class="fas fa-trash"></i></button>
+          <button class="btn" onclick="deleteEmpleado(<?php echo $row[0]?>)" ><i class="fas fa-trash"></i></button>
         </td>
       </tr>
     <?php

@@ -261,16 +261,6 @@ include("./php/conexion.php")
             <button class="btn btn-success float-left" id="addRowBtnC">Agregar nueva fila</i></button>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
@@ -284,13 +274,6 @@ include("./php/conexion.php")
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
       </div>
       <!-- /.container-fluid -->
     </div>

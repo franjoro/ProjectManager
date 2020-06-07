@@ -34,6 +34,9 @@ const loader = () => {
     },
   });
 };
+
+
+
 let numeroTotal = 1;
 let ShowIfExistSomething = false; 
 

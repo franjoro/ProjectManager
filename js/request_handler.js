@@ -6,6 +6,17 @@ const error_empty = () => {
   });
 };
 
+const loader = () => {
+  Swal.fire({
+    title: "Please Wait!",
+    html: "Loading data",
+    allowOutsideClick: false,
+    onBeforeOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
+
 const AlertaExito = () => {
   const Toast = Swal.mixin({
     toast: true,
@@ -127,6 +138,49 @@ const deleteCliente = (id) => {
   });
 };
 
+// VER CLIENTES
+const seeClientes = id =>{
+  loader();
+  $.ajax({
+    url:"php/clientes/detalles.php?id="+id
+  }).done( data =>{
+    swal.close();
+    Swal.fire({
+      title: "Information details",
+      html: data,
+    });
+  } )
+}
+// ACTUALIZAR CLIENTES 
+$("#clientTable").on("click", "tbody td", function () {
+  const toSend = $(this).data();
+  Swal.fire({
+    title: "Edit cell",
+    text:"You will edit a cell this will be reflected in the reporting information ",
+    input:"text",
+    inputValue : $(this).text() , 
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, edit it!",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url:"php/edit.php",
+        data:{tabla: toSend.tabla, columna: toSend.columna, campo: result.value, code: toSend.code},
+        type:"POST"
+      }).done((data)=>{
+        console.log(data)
+        AlertaExito();
+        tablaClientes();
+      } )
+    }
+  });
+  
+  
+});
+
 // ==========================================================Propiedades=======================
 //Obtener tabla
 const tablaPropiedades = () => {
@@ -170,6 +224,37 @@ $("#proOwner").focus(() => {
     $("#proOwner").html(data);
   });
 });
+
+const deletePropiedades = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this! ID ctz: " + id,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.value) {
+      const p1 = new Promise((res, rej) => {
+        $.ajax({
+          url: `php/propiedades/eliminar.php?id=${id}`,
+        }).done(() => {
+          res();
+        });
+      });
+      Promise.all([p1]).then(
+        Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+          () => {
+            location.reload();
+          }
+        )
+      );
+    }
+  });
+};
+
+
 // ==========================================================Proveedores=======================
 //Obtener tabla
 const tablaProvedores = () => {
@@ -208,6 +293,34 @@ $("#providersForm").submit(function (event) {
     });
 });
 
+const deleteProviders = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this! ID ctz: " + id,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.value) {
+      const p1 = new Promise((res, rej) => {
+        $.ajax({
+          url: `php/providers/eliminar.php?id=${id}`,
+        }).done(() => {
+          res();
+        });
+      });
+      Promise.all([p1]).then(
+        Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+          () => {
+            location.reload();
+          }
+        )
+      );
+    }
+  });
+};
 // ==========================================================Empleados=======================
 //Obtener tabla
 const tablaEmpleados = () => {
@@ -250,6 +363,35 @@ $("#empleadosForm").submit(function (event) {
       AlertaFallido();
     });
 });
+
+const deleteEmpleado = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this! ID ctz: " + id,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.value) {
+      const p1 = new Promise((res, rej) => {
+        $.ajax({
+          url: `php/empleados/eliminar.php?id=${id}`,
+        }).done(() => {
+          res();
+        });
+      });
+      Promise.all([p1]).then(
+        Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+          () => {
+            location.reload();
+          }
+        )
+      );
+    }
+  });
+};
 
 // ==========================================================Proyectos=======================
 //Obtener tabla
@@ -314,6 +456,37 @@ $("#client")
     });
     $("#ProyectoSelectPropiedades").prop("disabled", false);
   });
+
+const deleteProyecto = (id)=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this! ID ctz: " + id,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
+        const p1 = new Promise((res, rej) => {
+          $.ajax({
+            url: `php/proyecto/eliminar.php?id=${id}`,
+          }).done(() => {
+            res();
+          });
+        });
+
+        Promise.all([p1]).then(
+          Swal.fire("Deleted!", "Your file has been deleted.", "success").then( ()=>{
+            location.reload()
+          } )
+        );
+      }
+    });
+}
+
+
+
 
 // =================================================================MATERIALES Y COTIZACIONES =======================
 //ObtenerProyectos / Materiales
@@ -620,20 +793,20 @@ $("#rowsC")
         });
       });
 
-      // const ShowCoti = new Promise((resolve, reject) => {
-      //   $.ajax({
-      //     url: "php/cotizaciones/ObtenerCotizaciones.php",
-      //     data: { cliente: ProjectSelectorCtciones },
-      //   }).done((data) => {
+      const ShowCoti = new Promise((resolve, reject) => {
+        $.ajax({
+          url: "php/cotizaciones/ObtenerCotizaciones.php",
+          data: { cliente: ProjectSelectorCtciones },
+        }).done((data) => {
           $(".materialesDiv").css("display", "nonre");
           $("#btnAddMaterial").removeClass("visible").addClass("invisible");
-      //     $("#tablaMateriales").html(data);
-      //     $("#dataTable").DataTable();
-      //     resolve();
-      //   });
-      // });
+          $("#tablaMateriales").html(data);
+          $("#dataTable").DataTable();
+          resolve();
+        });
+      });
 
-      Promise.all([select]).then(AlertaExito());
+      Promise.all([select, ShowCoti]).then(AlertaExito());
     });
   })
   .on("click", ".BtnRowErase", function () {
@@ -735,3 +908,5 @@ const deleteThisCtz = (id, cliente) => {
     }
   });
 };
+
+

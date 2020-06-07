@@ -11,7 +11,7 @@
   <tbody>
     <?php
     require_once("../conexion.php");
-    $sql = "SELECT code,name,store,tel,paymethod FROM tb_providers";
+    $sql = "SELECT code,name,store,tel,paymethod FROM tb_providers WHERE code != '0'";
     $query = mysqli_query($mysqli, $sql);
     while ($row = mysqli_fetch_array($query)) {
     ?>
@@ -20,11 +20,10 @@
         <td><?php echo $row[2] ?></td>
         <td><?php echo $row[3] ?></td>
         <td><?php echo $row[4] ?></td>
-
         <td>
           <button class="btn"><i class="far fa-eye"></i></button>
           <button class="btn"><i class="far fa-edit"></i></i></button>
-          <button class="btn"><i class="fas fa-trash"></i></button>
+          <button class="btn" onclick="deleteProviders(<?php echo $row[0] ?>)" ><i class="fas fa-trash"></i></button>
         </td>
       </tr>
     <?php

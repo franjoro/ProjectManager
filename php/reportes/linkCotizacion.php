@@ -165,6 +165,8 @@ $datos = mysqli_fetch_array($queryClient);
                     </tbody>
                 </table>
             </div>
+
+            
             <div class="panel panel-default">
                 <table class="table table-bordered table-condensed">
                     <thead>

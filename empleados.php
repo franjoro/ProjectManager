@@ -64,13 +64,13 @@ include("./php/conexion.php")
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Administrar</h6>
             <a class="collapse-item " href="proyectos.php">Gestión proyectos</a>
-            <a class="collapse-item active" href="materiales.php">Administrar costos</a>
+            <a class="collapse-item" href="materiales.php">Administrar costos</a>
             <a class="collapse-item" href="reportes.php">Reportes</a>
 
           </div>
         </div>
       </li>
-      <li class="nav-item active ">
+      <li class="nav-item ">
         <a class="nav-link" href="cotizaciones.php">
           <i class="fas fa-file-invoice-dollar"></i>
           <span>Cotizaciones</span></a>
@@ -109,7 +109,7 @@ include("./php/conexion.php")
         Empleados
       </div>
 
-      <li class="nav-item ">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-users-cog"></i>
           <span>Colaboradores</span>

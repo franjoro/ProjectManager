@@ -21,7 +21,7 @@
         <td>
           <button class="btn"><i class="far fa-eye"></i></button>
           <button class="btn"><i class="far fa-edit"></i></i></button>
-          <button class="btn"><i class="fas fa-trash"></i></button>
+          <button class="btn" onclick='deleteProyecto(<?php echo $row[0]?>)' ><i class="fas fa-trash"></i></button>
         </td>
       </tr>
     <?php
