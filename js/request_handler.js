@@ -70,6 +70,16 @@ const Alertausuario = () => {
   });
 };
 
+
+const NotEditable = () =>{
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "You cannot edit this cell on this table",
+  });
+}
+
+
 //Mascara de materiales/cotizaciones Dinero
 const crearMascara = () => {
   $(".precioClase").mask("000,000,000,000,000.00", {
@@ -154,6 +164,7 @@ const seeClientes = id =>{
 // ACTUALIZAR CLIENTES 
 $("#clientTable").on("click", "tbody td", function () {
   const toSend = $(this).data();
+  if(toSend.tabla === "delete") {return deleteCliente(toSend.code)}
   Swal.fire({
     title: "Edit cell",
     text:"You will edit a cell this will be reflected in the reporting information ",
@@ -177,8 +188,6 @@ $("#clientTable").on("click", "tbody td", function () {
       } )
     }
   });
-  
-  
 });
 
 // ==========================================================Propiedades=======================
@@ -187,7 +196,7 @@ const tablaPropiedades = () => {
   $.ajax({
     url: "php/propiedades/tabla.php",
   }).done(function (data) {
-    $("#clientTable").html(data);
+    $("#PTable").html(data);
     $("#dataTable").DataTable();
   });
 };
@@ -254,6 +263,45 @@ const deletePropiedades = (id) => {
   });
 };
 
+// ACTUALIZAR PROPIEDADES 
+$("#PTable").on("click", "tbody td", function () {
+  const toSend = $(this).data();
+  if (toSend.tabla === "delete") {
+    return deletePropiedades(toSend.code);
+  }
+  if (toSend.tabla === "NotEditable") {
+    return NotEditable();
+  }
+  Swal.fire({
+    title: "Edit cell",
+    text:
+      "You will edit a cell this will be reflected in the reporting information ",
+    input: "text",
+    inputValue: $(this).text(),
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, edit it!",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "php/edit.php",
+        data: {
+          tabla: toSend.tabla,
+          columna: toSend.columna,
+          campo: result.value,
+          code: toSend.code,
+        },
+        type: "POST",
+      }).done((data) => {
+        AlertaExito();
+        tablaPropiedades();
+      });
+    }
+  });
+});
+
 
 // ==========================================================Proveedores=======================
 //Obtener tabla
@@ -261,7 +309,7 @@ const tablaProvedores = () => {
   $.ajax({
     url: "php/providers/tabla.php",
   }).done(function (data) {
-    $("#clientTable").html(data);
+    $("#clientProviders").html(data);
     $("#dataTable").DataTable();
   });
 };
@@ -321,6 +369,44 @@ const deleteProviders = (id) => {
     }
   });
 };
+// ACTUALIZAR PROOVEDORES 
+$("#clientProviders").on("click", "tbody td", function () {
+  const toSend = $(this).data();
+  if (toSend.tabla === "delete") {
+    return deleteProviders(toSend.code);
+  }
+  // if (toSend.tabla === "NotEditable") {
+  //   return NotEditable();
+  // }
+  Swal.fire({
+    title: "Edit cell",
+    text:
+      "You will edit a cell this will be reflected in the reporting information ",
+    input: "text",
+    inputValue: $(this).text(),
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, edit it!",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "php/edit.php",
+        data: {
+          tabla: toSend.tabla,
+          columna: toSend.columna,
+          campo: result.value,
+          code: toSend.code,
+        },
+        type: "POST",
+      }).done((data) => {
+        AlertaExito();
+        tablaProvedores();
+      });
+    }
+  });
+});
 // ==========================================================Empleados=======================
 //Obtener tabla
 const tablaEmpleados = () => {

@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(isset($_SESSION['code'])){ 
-include("./php/conexion.php")
+if (isset($_SESSION['code'])) {
+    include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -201,7 +201,7 @@ include("./php/conexion.php")
 
           <div class="row">
             <!-- Content Column -->
-            <div class="col-lg-5 mb-4">
+            <div class="col-lg-12 mb-4">
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -212,33 +212,36 @@ include("./php/conexion.php")
                 </div>
                 <div class="card-body">
                   <form id="propiedadesForm">
-                    <div class="form-group">
+                    <div class="form-row">
+                    <div class="form-group col-md-4">
                       <label for="inputAddress">Name *</label>
                       <input type="text" required class="form-control" id="name" name="name" placeholder="My Property...">
                     </div>
-                    <div class="form-row">
-                      <div class="form-group col-md-6">
+                      <div class="form-group col-md-4">
                         <label for="inputEmail4">OWNER</label>
                         <select name="owner" class="form-control" id="proOwner">
                           <option disabled selected>Select Client</option>
                           <option disabled>Loading...</option>
                         </select>
                       </div>
-                      <div class="form-group col-md-6">
+                      <div class="form-group col-md-4">
                         <label for="inputPassword4">TELMGR</label>
                         <input type="text" class="form-control" name="telmgr">
                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-row">
+
+                    <div class="form-group col-md-6" >
                       <label for="inputAddress2">Address</label>
                       <textarea class="form-control" placeholder="Apartment, studio, or floor" name="address"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-6">
                       <label for="inputAddress2">Notes</label>
                       <textarea class="form-control" placeholder="Something..." name="notes"></textarea>
-
                     </div>
+                    </div>
+
                     <button id="New_button" type="submit" class="btn btn-primary visible">Registrar</button>
                   </form>
 
@@ -248,7 +251,7 @@ include("./php/conexion.php")
                 </div>
               </div>
             </div>
-            <div class="col-lg-7 mb-4">
+            <div class="col-lg-12 mb-4">
               <!-- Illustrations -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -258,7 +261,7 @@ include("./php/conexion.php")
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <div id="clientTable"></div>
+                    <div id="PTable"></div>
                   </div>
                 </div>
               </div>
@@ -336,8 +339,8 @@ include("./php/conexion.php")
 </body>
 
 </html>
-<?php 
-} else { 
+<?php
+} else {
     header("location:php/destroy.php");
 }
 ?>

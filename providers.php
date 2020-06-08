@@ -267,7 +267,7 @@ include("./php/conexion.php")
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <div id="clientTable"></div>
+                    <div id="clientProviders"></div>
                   </div>
                 </div>
               </div>

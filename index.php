@@ -16,7 +16,7 @@ if(isset($_SESSION['code']) ){
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>SB Admin 2 - Login</title>
+    <title>CCC</title>
 
     <!-- Custom fonts for this template-->
     <link
