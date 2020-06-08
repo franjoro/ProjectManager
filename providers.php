@@ -24,113 +24,105 @@ include("./php/conexion.php")
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
 </head>
 
+
 <body id="page-top">
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-      </a>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"  href="dashboard.php">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-1">Control Cost Center</div>
+            </a>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0" />
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider" />
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Administration
+            </div>
+            <li class="nav-item ">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Projects</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Administration</h6>
+                        <a class="collapse-item " href="proyectos.php">Projects management</a>
+                        <a class="collapse-item" href="materiales.php">Manage costs</a>
+                        <a class="collapse-item" href="reportes.php">Reports</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item  ">
+                <a class="nav-link" href="cotizaciones.php">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Activities quote</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider" />
 
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0" />
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Previous Data
+            </div>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item ">
+                <a class="nav-link" href="clientes.php">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Clients</span></a>
+            </li>
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
+            <li class="nav-item ">
+                <a class="nav-link " href="propiedades.php">
+                    <i class="fas fa-building"></i>
+                    <span>Properties</span></a>
+            </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider" />
+            <!-- Nav Item - Tables -->
+            <li class="nav-item ">
+                <a class="nav-link" href="providers.php">
+                    <i class="fas fa-boxes"></i>
+                    <span>Providers</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block" />
+            <div class="sidebar-heading">
+                Employees
+            </div>
+            <li class="nav-item ">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Employees Management</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Administrar</h6>
+                        <a class="collapse-item " href="empleados.php">Employees</a>
+                        <a class="collapse-item" href="labor.php">Work time</a>
+                    </div>
+                </div>
+            </li>
 
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Administración
-      </div>
-
-      <li class="nav-item ">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <i class="fas fa-briefcase"></i>
-          <span>Proyectos</span>
-        </a>
-        <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Administrar</h6>
-            <a class="collapse-item " href="proyectos.php">Gestión proyectos</a>
-            <a class="collapse-item " href="materiales.php">Administrar costos</a>
-            <a class="collapse-item" href="reportes.php">Reportes</a>
-
-          </div>
-        </div>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link" href="cotizaciones.php">
-          <i class="fas fa-file-invoice-dollar"></i>
-          <span>Cotizaciones</span></a>
-      </li>
-      <!-- Divider -->
-      <hr class="sidebar-divider" />
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Datos previos
-      </div>
-      <!-- Nav Item - Charts -->
-      <li class="nav-item ">
-        <a class="nav-link" href="clientes.php">
-          <i class="fas fa-user-tie"></i>
-          <span>Clientes</span></a>
-      </li>
-
-      <li class="nav-item ">
-        <a class="nav-link " href="propiedades.php">
-          <i class="fas fa-building"></i>
-          <span>Propiedades</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item active">
-        <a class="nav-link" href="providers.php">
-          <i class="fas fa-boxes"></i>
-          <span>Proveedores</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block" />
-
-      <div class="sidebar-heading">
-        Empleados
-      </div>
-
-      <li class="nav-item ">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-users-cog"></i>
-          <span>Colaboradores</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Administrar</h6>
-            <a class="collapse-item " href="empleados.php">Empleados</a>
-            <a class="collapse-item" href="buttons.html">Horas de trabajo</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-    </ul>
-    <!-- End of Sidebar -->
-
-
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
 
 
     <!-- Content Wrapper -->
@@ -169,8 +161,7 @@ include("./php/conexion.php")
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -195,7 +186,7 @@ include("./php/conexion.php")
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Proveedores</h1>
+          <h1 class="h3 mb-4 text-gray-800">Providers</h1>
 
 
 
@@ -205,9 +196,7 @@ include("./php/conexion.php")
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Agregar nuevo proveedor /
-                    codigo de proveedor: <span style="color: black;">ABC</span>
-                  </h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Add new provider</h6>
 
                 </div>
                 <div class="card-body">
@@ -248,7 +237,7 @@ include("./php/conexion.php")
                       <textarea class="form-control" placeholder="Something..." name="notes"></textarea>
 
                     </div>
-                    <button id="New_button" type="submit" class="btn btn-primary visible">Registrar</button>
+                    <button id="New_button" type="submit" class="btn btn-primary visible">Insert</button>
                   </form>
 
                   <button id="loader" class="btn btn-primary invisible" disabled>
@@ -262,7 +251,7 @@ include("./php/conexion.php")
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
-                    Illustrations
+                    Providers table
                   </h6>
                 </div>
                 <div class="card-body">
@@ -282,7 +271,7 @@ include("./php/conexion.php")
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <!-- <span>Copyright &copy; Your Website 2019</span> -->
           </div>
         </div>
       </footer>
@@ -312,7 +301,7 @@ include("./php/conexion.php")
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="php/destroy.php">Logout</a>
         </div>
       </div>
     </div>

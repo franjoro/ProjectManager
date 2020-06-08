@@ -70,15 +70,13 @@ const Alertausuario = () => {
   });
 };
 
-
-const NotEditable = () =>{
+const NotEditable = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
     text: "You cannot edit this cell on this table",
   });
-}
-
+};
 
 //Mascara de materiales/cotizaciones Dinero
 const crearMascara = () => {
@@ -149,27 +147,30 @@ const deleteCliente = (id) => {
 };
 
 // VER CLIENTES
-const seeClientes = id =>{
+const seeClientes = (id) => {
   loader();
   $.ajax({
-    url:"php/clientes/detalles.php?id="+id
-  }).done( data =>{
+    url: "php/clientes/detalles.php?id=" + id,
+  }).done((data) => {
     swal.close();
     Swal.fire({
       title: "Information details",
       html: data,
     });
-  } )
-}
-// ACTUALIZAR CLIENTES 
+  });
+};
+// ACTUALIZAR CLIENTES
 $("#clientTable").on("click", "tbody td", function () {
   const toSend = $(this).data();
-  if(toSend.tabla === "delete") {return deleteCliente(toSend.code)}
+  if (toSend.tabla === "delete") {
+    return deleteCliente(toSend.code);
+  }
   Swal.fire({
     title: "Edit cell",
-    text:"You will edit a cell this will be reflected in the reporting information ",
-    input:"text",
-    inputValue : $(this).text() , 
+    text:
+      "You will edit a cell this will be reflected in the reporting information ",
+    input: "text",
+    inputValue: $(this).text(),
     icon: "info",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -178,14 +179,19 @@ $("#clientTable").on("click", "tbody td", function () {
   }).then((result) => {
     if (result.value) {
       $.ajax({
-        url:"php/edit.php",
-        data:{tabla: toSend.tabla, columna: toSend.columna, campo: result.value, code: toSend.code},
-        type:"POST"
-      }).done((data)=>{
-        console.log(data)
+        url: "php/edit.php",
+        data: {
+          tabla: toSend.tabla,
+          columna: toSend.columna,
+          campo: result.value,
+          code: toSend.code,
+        },
+        type: "POST",
+      }).done((data) => {
+        console.log(data);
         AlertaExito();
         tablaClientes();
-      } )
+      });
     }
   });
 });
@@ -263,7 +269,7 @@ const deletePropiedades = (id) => {
   });
 };
 
-// ACTUALIZAR PROPIEDADES 
+// ACTUALIZAR PROPIEDADES
 $("#PTable").on("click", "tbody td", function () {
   const toSend = $(this).data();
   if (toSend.tabla === "delete") {
@@ -301,7 +307,6 @@ $("#PTable").on("click", "tbody td", function () {
     }
   });
 });
-
 
 // ==========================================================Proveedores=======================
 //Obtener tabla
@@ -369,7 +374,7 @@ const deleteProviders = (id) => {
     }
   });
 };
-// ACTUALIZAR PROOVEDORES 
+// ACTUALIZAR PROOVEDORES
 $("#clientProviders").on("click", "tbody td", function () {
   const toSend = $(this).data();
   if (toSend.tabla === "delete") {
@@ -413,7 +418,7 @@ const tablaEmpleados = () => {
   $.ajax({
     url: "php/empleados/tabla.php",
   }).done(function (data) {
-    $("#clientTable").html(data);
+    $("#tableEmpleado").html(data);
     $("#dataTable").DataTable();
   });
 };
@@ -424,7 +429,7 @@ $("#empleadosForm").submit(function (event) {
   const serializedData = $(this).serialize();
   const pin = $("#pin").val();
   $.ajax({
-    url: "php/empleados/insert.php?pin="+ pin,
+    url: "php/empleados/insert.php?pin=" + pin,
     type: "post",
     data: serializedData,
     beforeSend: () => {
@@ -478,14 +483,51 @@ const deleteEmpleado = (id) => {
     }
   });
 };
-
+// ACTUALIZAR EMPLEADOS
+$("#tableEmpleado").on("click", "tbody td", function () {
+  const toSend = $(this).data();
+  if (toSend.tabla === "delete") {
+    return deleteEmpleado(toSend.code);
+  }
+  if (toSend.tabla === "NotEditable") {
+    return NotEditable();
+  }
+  Swal.fire({
+    title: "Edit cell",
+    text:
+      "You will edit a cell this will be reflected in the reporting information ",
+    input: "text",
+    inputValue: $(this).text(),
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, edit it!",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "php/edit.php",
+        data: {
+          tabla: toSend.tabla,
+          columna: toSend.columna,
+          campo: result.value,
+          code: toSend.code,
+        },
+        type: "POST",
+      }).done((data) => {
+        AlertaExito();
+        tablaEmpleados();
+      });
+    }
+  });
+});
 // ==========================================================Proyectos=======================
 //Obtener tabla
 const tablaProyecto = () => {
   $.ajax({
     url: "php/proyecto/tabla.php",
   }).done(function (data) {
-    $("#clientTable").html(data);
+    $("#projectTable").html(data);
     $("#dataTable").DataTable();
   });
 };
@@ -543,36 +585,146 @@ $("#client")
     $("#ProyectoSelectPropiedades").prop("disabled", false);
   });
 
-const deleteProyecto = (id)=>{
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this! ID ctz: " + id,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.value) {
-        const p1 = new Promise((res, rej) => {
-          $.ajax({
-            url: `php/proyecto/eliminar.php?id=${id}`,
-          }).done(() => {
-            res();
-          });
+const deleteProyecto = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this! ID ctz: " + id,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.value) {
+      const p1 = new Promise((res, rej) => {
+        $.ajax({
+          url: `php/proyecto/eliminar.php?id=${id}`,
+        }).done(() => {
+          res();
         });
+      });
 
-        Promise.all([p1]).then(
-          Swal.fire("Deleted!", "Your file has been deleted.", "success").then( ()=>{
-            location.reload()
-          } )
-        );
+      Promise.all([p1]).then(
+        Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+          () => {
+            location.reload();
+          }
+        )
+      );
+    }
+  });
+};
+
+const obtClientesToEditPro = (info) => {
+  $.ajax({
+    url: "php/proyecto/getClientesEdit.php",
+  }).done((data) => {
+    toSend = JSON.parse(data);
+    Swal.fire({
+      title: "Select client to edit",
+      input: "select",
+      inputOptions: toSend,
+      inputPlaceholder: "Select a client",
+      showCancelButton: true,
+    }).then((data) => {
+      if (data.value) {
+        $.ajax({
+          url: "php/edit.php",
+          data: {
+            tabla: info.tabla,
+            columna: info.columna,
+            campo: data.value,
+            code: info.code,
+          },
+          type: "POST",
+        }).done((data) => {
+          AlertaExito();
+          tablaProyecto();
+        });
       }
     });
-}
+  });
+};
+
+const obtPropiedadToEditPro = (info) => {
+const cliente = info.cliente;
+  $.ajax({
+    url: "php/proyecto/getPropiedadEdit.php?cliente="+cliente
+  }).done((data) => {
+    toSend = JSON.parse(data);
+    Swal.fire({
+      title: "Select client to edit",
+      input: "select",
+      inputOptions: toSend,
+      inputPlaceholder: "Select a client",
+      showCancelButton: true,
+    }).then((data) => {
+      if (data.value) {
+        $.ajax({
+          url: "php/edit.php",
+          data: {
+            tabla: info.tabla,
+            columna: info.columna,
+            campo: data.value,
+            code: info.code,
+          },
+          type: "POST",
+        }).done((data) => {
+          AlertaExito();
+          tablaProyecto();
+        });
+      }
+    });
+  });
+};
 
 
 
+
+// ACTUALIZAR PROYECTOS
+$("#projectTable").on("click", "tbody td", function () {
+  const toSend = $(this).data();
+  if (toSend.tabla === "delete") {
+    return deleteProyecto(toSend.code);
+  }
+  if (toSend.tabla === "NotEditable") {
+    return NotEditable();
+  }
+  if (toSend.select === "cliente") {
+    return obtClientesToEditPro(toSend);
+  }
+  if (toSend.select === "propiedad") {
+    return obtPropiedadToEditPro(toSend);
+  }
+  Swal.fire({
+    title: "Edit cell",
+    text:
+      "You will edit a cell this will be reflected in the reporting information ",
+    input: "text",
+    inputValue: $(this).text(),
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, edit it!",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "php/edit.php",
+        data: {
+          tabla: toSend.tabla,
+          columna: toSend.columna,
+          campo: result.value,
+          code: toSend.code,
+        },
+        type: "POST",
+      }).done((data) => {
+        AlertaExito();
+        tablaProyecto();
+      });
+    }
+  });
+});
 
 // =================================================================MATERIALES Y COTIZACIONES =======================
 //ObtenerProyectos / Materiales
@@ -913,11 +1065,11 @@ $("#clienteSelectNew").hover(() => {
 });
 
 // SELECT DE TIPO  DE PROYECTO
-$("#KindPro").change(()=>{
+$("#KindPro").change(() => {
   const valor = $("#KindPro").children("option:selected").val();
   const mesActual = ("0" + (new Date().getMonth() + 1)).slice(-2);
-  const NombreNuevoProyecto = $("#generico").val(valor+mesActual);
-} );
+  const NombreNuevoProyecto = $("#generico").val(valor + mesActual);
+});
 
 //SELECT de proyectos
 let bPCtz = false;
@@ -939,12 +1091,10 @@ $("#ProjectSelectorCtciones")
       $("#newInput").removeClass("invisible").addClass("visible");
       $("#newCliente").removeClass("invisible").addClass("visible");
       $("#newKind").removeClass("invisible").addClass("visible");
-
     } else {
       $("#newInput").removeClass("visible").addClass("invisible");
       $("#newCliente").removeClass("visible").addClass("invisible");
       $("#newKind").removeClass("visible").addClass("invisible");
-
     }
 
     $.ajax({
@@ -956,9 +1106,6 @@ $("#ProjectSelectorCtciones")
       $("#tablaMateriales").html(data);
       $("#dataTable").DataTable();
     });
-
-
-
   });
 
 //Eliminar Ctz
@@ -994,5 +1141,3 @@ const deleteThisCtz = (id, cliente) => {
     }
   });
 };
-
-
