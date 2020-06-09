@@ -1,7 +1,6 @@
-<?php 
-session_start();
+<?php session_start();
 require_once("../../php/conexion.php");
-$idEmpleado = $_SESSION['code'];
+$idEmpleado = $_SESSION['user'];
 $date = $_GET['date'];
 
 $sql = "SELECT tb_labor.code, tb_labor.codeEmpleado , tb_labor.dateDay, tb_labor.startime , tb_labor.endtime , tb_labor.totalhoras, tb_labor.status, tb_proyectos.name FROM `tb_labor` INNER JOIN tb_proyectos ON tb_labor.codeProyecto = tb_proyectos.code WHERE codeEmpleado='" . $idEmpleado . "' AND dateDay='" . $date . "' ";

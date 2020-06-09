@@ -19,12 +19,12 @@ if($row[0] == 0){
         $row= mysqli_fetch_array($query);
 
         $_SESSION['pin'] = $pin;
-        $_SESSION['code'] = $row[0];
-        if(isset($_SESSION['code'])){
+        $_SESSION['user'] = $row[0];
+        if(isset($_SESSION['user'])){
             echo "okE";
         }
     }else{
-        $_SESSION['code'] = $pin;
+        $_SESSION['user'] = $pin;
         echo "ok";
     }
 }

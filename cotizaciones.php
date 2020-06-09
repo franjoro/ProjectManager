@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['code'])){ 
+if(isset($_SESSION['user'])){ 
 include("./php/conexion.php")
 ?>
 <!DOCTYPE html>

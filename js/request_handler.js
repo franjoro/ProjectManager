@@ -647,9 +647,9 @@ const obtClientesToEditPro = (info) => {
 };
 
 const obtPropiedadToEditPro = (info) => {
-const cliente = info.cliente;
+  const cliente = info.cliente;
   $.ajax({
-    url: "php/proyecto/getPropiedadEdit.php?cliente="+cliente
+    url: "php/proyecto/getPropiedadEdit.php?cliente=" + cliente,
   }).done((data) => {
     toSend = JSON.parse(data);
     Swal.fire({
@@ -677,9 +677,6 @@ const cliente = info.cliente;
     });
   });
 };
-
-
-
 
 // ACTUALIZAR PROYECTOS
 $("#projectTable").on("click", "tbody td", function () {
@@ -902,7 +899,11 @@ $("#rows")
   // Insertar============ / materiales
   .submit(function (event) {
     event.preventDefault();
-    $(".precioClase").unmask();
+    $(".precioClase").each(function () {
+      console.log($(this).val());
+      var text = $(this).val().replace(",", " ");
+      $(this).val(text.trim());
+    });
     const selectedProject = $("#ProjectSelectorCostos")
       .children("option:selected")
       .val();
@@ -995,7 +996,11 @@ $("#rowsC")
   // Insertar============ / Cotizaciones
   .submit(function (event) {
     event.preventDefault();
-    $(".precioClase").unmask();
+    $(".precioClase").each(function () {
+      console.log($(this).val());
+      var text = $(this).val().replace(",", " ");
+      $(this).val(text.trim());
+    });
     const ProjectSelectorCtciones = $("#ProjectSelectorCtciones")
       .children("option:selected")
       .val();

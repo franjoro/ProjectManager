@@ -1,6 +1,5 @@
-<?php
-session_start();
-if(isset($_SESSION['code'])){ 
+<?php session_start();
+if(isset($_SESSION['user'])){ 
 include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
@@ -584,7 +583,7 @@ include("./php/conexion.php")
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">
                         Cancel
                     </button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="php/destroy.php">Logout</a>
                 </div>
             </div>
         </div>

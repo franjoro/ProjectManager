@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require_once("../../php/conexion.php");
-$empleado = $_SESSION['code'];
+$empleado = $_SESSION['user'];
 $date = $_GET['date'];
 $entrada = $_POST['entrada'];
 $selectedProject = $_POST['selectedProject'];
