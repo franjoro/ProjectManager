@@ -30,10 +30,6 @@ if(isset($_SESSION['user'])){
                 <li class="nav-item active">
                     <a class="nav-link" href="#">My Works</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">User id: <span id="user"><?php echo $_SESSION['code'];
-?> </span></a>
-                </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="../">Logout</a>
                 </li>

@@ -4,6 +4,7 @@ if(isset($_SESSION['user'])){
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,13 +30,9 @@ if(isset($_SESSION['user'])){
                 <li class="nav-item">
                     <a class="nav-link" href="myworks.php">My Works</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">User id: <span id="user"><?php echo $_SESSION['code'];
-?> </span></a>
-                </li>
-                 <li class="nav-item ">
+                <li class="nav-item ">
                     <a class="nav-link" href="php/destroy.php">Logout</a>
-                </li>  
+                </li>
 
             </ul>
         </div>
@@ -52,7 +49,7 @@ if(isset($_SESSION['user'])){
                         <tfoot>
                             <tr>
                                 <td colspan="3">
-                                    <button class="btn btn-success" id="newbtn" >Add new work row</button>
+                                    <button class="btn btn-success" id="newbtn">Add new work row</button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -63,17 +60,18 @@ if(isset($_SESSION['user'])){
                                 <th><span class="text-truncate">Start/End Hours</span></th>
                             </tr>
                         </thead>
-                            <form>
-                        <tbody id="turno">
-                             
-                        </tbody>
-                            </form>
+                        <form>
+                            <tbody id="turno">
+
+                            </tbody>
+                        </form>
                     </table>
                 </div>
             </div>
             <div class="card-footer text-muted">
-               <p>
-Instructions: You must select the project and entry time, then the departure time. By default the current time is selected. Please don't forget to finish the process</p>
+                <p>
+                    Instructions: You must select the project and entry time, then the departure time. By default the
+                    current time is selected. Please don't forget to finish the process</p>
             </div>
         </div>
     </div>
