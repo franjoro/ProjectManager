@@ -5,7 +5,8 @@ $sql = "SELECT
 tb_bill.name,
 tb_bill.date,
 tb_providers.name,
-SUM(tb_materiales.total)
+SUM(tb_materiales.total),
+tb_bill.code
  FROM tb_bill INNER JOIN tb_providers ON tb_bill.providerCode = tb_providers.code INNER JOIN tb_materiales ON tb_bill.code = tb_materiales.Bill WHERE tb_bill.projectCode='" . $cliente . "'  GROUP BY tb_bill.name";
 $total = 0;
 $query = mysqli_query($mysqli, $sql);
@@ -17,10 +18,11 @@ if(!$query){
 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
         <tr>
-            <th>Fecha</th>
+            <th>Date</th>
             <th>Bill number</th>
-            <th>Proovedor</th>
-            <th>Costo de materiales / Sin impuestos</th>
+            <th>Provider</th>
+            <th>Material cost / Without taxes</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -28,22 +30,28 @@ if(!$query){
         while ($row = mysqli_fetch_array($query)) {
             $total = $total + $row[3];
         ?>
-            <tr>
-                <td><?php echo $row[1] ?></td>
-                <td><?php echo $row[0] ?></td>
-                <td><?php echo $row[2] ?></td>
-                <td>$<?php echo number_format($row[3], 2)  ?></td>
-            </tr>
+        <tr>
+            <td><?php echo $row[1] ?></td>
+            <td><?php echo $row[0] ?></td>
+            <td><?php echo $row[2] ?></td>
+            <td>$<?php echo number_format($row[3], 2)  ?></td>
+            <td>
+                <button class="bnt btn-outline-danger btn-sm "
+                    onclick="deleteThisCosto(<?php echo $row[4] . ',' . $cliente ?>)"><i
+                        class="far fa-trash-alt"></i></button>
+            </td>
+        </tr>
         <?php
         }
         ?>
     </tbody>
     <tfoot>
         <tr>
-            <th>Fecha</th>
+            <th>Date</th>
             <th>Bill number</th>
-            <th>Proovedor</th>
-            <th>Costo de materiales / Sin impuestos</th>
+            <th>Provider</th>
+            <th>Material cost / Without taxes</th>
+            <th>Action</th>
         </tr>
     </tfoot>
 </table>
@@ -53,7 +61,8 @@ if(!$query){
 
 <div class="row">
     <div class="col-6">
-        <a href="php/reportes/consolidadoProyecto.php?projectCode=<?php echo $cliente ?>"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Ver a detalle</button></a>
+        <a href="php/reportes/consolidadoProyecto.php?projectCode=<?php echo $cliente ?>"><button type="button"
+                class="btn btn-outline-secondary btn-lg btn-block">Ver a detalle</button></a>
     </div>
     <div class="col-6">
         <hr>

@@ -41,7 +41,7 @@ $query = mysqli_query($mysqli, $sql);
             <th>Concepto</th>
             <th>Cantidad</th>
             <th>Costo</th>
-            <th>$ <?php echo $total ?></th>
+            <th>$<?php echo number_format($total, 2) ?></th>
             <th>Editar</th>
         </tr>
     </tfoot>
@@ -54,7 +54,7 @@ $query = mysqli_query($mysqli, $sql);
     <div class="col-6">
         <a href="php/reportes/linkCotizacion.php?projectCode=<?php echo $cliente ?>"><button type="button"
                 class="btn btn-outline-secondary btn-lg btn-block">Generate quotes</button></a>
-        <a href=""><button type="button" class="btn btn-outline-success btn-lg btn-block">
+        <a href="php/reportes/linkFactura.php?projectCode=<?php echo $cliente ?>""><button type="button" class="btn btn-outline-success btn-lg btn-block">
                 Generate invoice</button></a>
     </div>
     <div class="col-6">

@@ -30,6 +30,9 @@ if(isset($_SESSION['user'])){
                 <li class="nav-item">
                     <a class="nav-link" href="myworks.php">My Works</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-id="<?php echo $_SESSION['user']?>" id="change" >Change my Password</a>
+                </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="php/destroy.php">Logout</a>
                 </li>

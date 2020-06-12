@@ -261,18 +261,14 @@ include("./php/conexion.php")
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input type="checkbox" id="gst" name="gst" value="1" class="custom-control-input">
+                                    <input type="checkbox" id="gst" name="gst" checked value="1" class="custom-control-input">
                                     <label class="custom-control-label" for="gst">GST 5%</label>
                                 </div>
                                 <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input type="checkbox" id="pst" name="pst" value="1" class="custom-control-input">
+                                    <input type="checkbox" id="pst" name="pst" checked value="1" class="custom-control-input">
                                     <label class="custom-control-label" for="pst">PST 7%</label>
                                 </div>
                             </div>
-
-
-
-
                     </div>
                     <div class="card-footer">
 
@@ -282,12 +278,6 @@ include("./php/conexion.php")
                         <button class="btn btn-success float-left" id="addRowBtn">Agregar nueva fila</i></button>
                     </div>
                 </div>
-
-
-
-
-
-
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">

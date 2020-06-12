@@ -478,18 +478,54 @@ const deleteEmpleado = (id) => {
       Promise.all([p1]).then(
         Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
           () => {
-            location.reload();
+           tablaEmpleados()
           }
         )
       );
     }
   });
 };
+
+const restartPassword = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You are about to reset this user's password, it will be the same as their assigned pin" ,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes!",
+  }).then((result) => {
+    if (result.value) {
+      const p1 = new Promise((res, rej) => {
+        $.ajax({
+          url: `empleados/php/password.php?id=${id}`,
+        }).done((data) => {
+          console.log(data);
+          res();
+        });
+      });
+      Promise.all([p1]).then(
+        Swal.fire("Updated!", "the user can change the password in their profile", "success").then(
+          () => {
+           tablaEmpleados()
+          }
+        )
+      );
+    }
+  });
+};
+
+
+
 // ACTUALIZAR EMPLEADOS
 $("#tableEmpleado").on("click", "tbody td", function () {
   const toSend = $(this).data();
   if (toSend.tabla === "delete") {
     return deleteEmpleado(toSend.code);
+  }
+  if (toSend.tabla === "restart") {
+    return restartPassword(toSend.code);
   }
   if (toSend.tabla === "NotEditable") {
     return NotEditable();
@@ -699,7 +735,7 @@ $("#projectTable").on("click", "tbody td", function () {
     title: "Edit cell",
     text:
       "You will edit a cell this will be reflected in the reporting information ",
-    input: "text",
+    input: "textarea",
     inputValue: $(this).text(),
     icon: "info",
     showCancelButton: true,
@@ -961,7 +997,38 @@ $("#rows")
       Promise.all([ShowCoti, select]).then(AlertaExito());
     });
   });
+const deleteThisCosto = (id, cliente) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this! ID ctz: " + id,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.value) {
+      const p1 = new Promise((res, rej) => {
+        $.ajax({
+          url: `php/materiales/eliminarCostos.php?id=${id}`,
+        }).done(() => {
+          $.ajax({
+            url: "php/materiales/ObtenerTabla.php",
+            data: { cliente },
+          }).done((data) => {
+            $("#tablaMateriales").html(data);
+            $("#dataTable").DataTable();
+          });
+          res();
+        });
+      });
 
+      Promise.all([p1]).then(
+        Swal.fire("Deleted!", "Your file has been deleted.", "success")
+      );
+    }
+  });
+};
 // Cotizaciones===================================================
 imprimirFila(contador, false);
 

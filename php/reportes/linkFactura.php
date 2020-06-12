@@ -49,7 +49,7 @@ $datos = mysqli_fetch_array($queryClient);
                     </div>
                 </div>
                 <div class="col-xs-5">
-                    <h1>Estimate Contracts</h1>
+                    <h1>Invoice</h1>
                     <h4 class="text-muted">NO: <?php echo $datos[0] ?> | <?php echo date("d/m/Y") ?> </h4>
                 </div>
             </div>

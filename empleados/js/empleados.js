@@ -260,3 +260,35 @@ const insertarSalida = (code,entrada) => {
     }
   });
 };
+
+
+
+// ACTUALIZAR PASS USER
+$("#change").click( () =>{  
+  const toSend = JSON.stringify($("#change").data().id);
+  console.log(toSend)
+  Swal.fire({
+    title: "Change my password",
+    text: "Here you can edit your password ",
+    input: "password",
+    inputValue: $(this).text(),
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, edit it!",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "php/password.php?FromEmpleado=" + result.value + "&id=" + toSend,
+      }).done(() => {
+        Swal.fire(
+          "OK",
+          "Don't forget to start next time with your new password",
+          "success"
+        );
+      });
+    }
+  });
+});
+

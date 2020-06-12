@@ -12,6 +12,7 @@
             <th>Emergency contact</th>
             <th>Tel. Emergency</th>
             <th>Delete</th>
+            <th>Restart Password</th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +37,7 @@
             </td>
             <td data-columna="telspouse" data-tabla="tb_empleados" data-code="<?php echo $code?>"><?php echo $row[6] ?>
             </td>
-            <td  data-tabla="NotEditable"><?php echo $term?></td>
+            <td data-tabla="NotEditable"><?php echo $term?></td>
             <td data-columna="rate" data-tabla="tb_empleados" data-code="<?php echo $code?>"><?php echo $row[8] ?></td>
             <td data-columna="emrgcontact" data-tabla="tb_empleados" data-code="<?php echo $code?>">
                 <?php echo $row[9] ?></td>
@@ -44,6 +45,9 @@
                 <?php echo $row[10] ?></td>
             <td data-tabla="delete" data-code="<?php echo $code?>">
                 <button class="btn"><i class="fas fa-trash"></i></button>
+            </td>
+            <td data-tabla="restart" data-code="<?php echo $code?>">
+                <button class="btn"><i class="fas fa-key"></i></button>
             </td>
         </tr>
         <?php
@@ -64,6 +68,7 @@
             <th>Emergency contact</th>
             <th>Tel. Emergency</th>
             <th>Delete</th>
+            <th>Restart Password</th>
         </tr>
     </tfoot>
 </table>

@@ -4,6 +4,7 @@ if(isset($_SESSION['user'])){
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +13,7 @@ if(isset($_SESSION['user'])){
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-  </head>
+</head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,6 +31,9 @@ if(isset($_SESSION['user'])){
                 <li class="nav-item active">
                     <a class="nav-link" href="#">My Works</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-id="<?php echo $_SESSION['user']?>"  id="change">Change my Password</a>
+                </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="../">Logout</a>
                 </li>
@@ -40,7 +44,7 @@ if(isset($_SESSION['user'])){
     <div class="p-4">
         <div class="card text-center">
             <div class="card-body">
-               <div id="tabla" class="table-responsive"></div>
+                <div id="tabla" class="table-responsive"></div>
             </div>
         </div>
     </div>
@@ -52,17 +56,20 @@ if(isset($_SESSION['user'])){
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js">
+    </script>
+    <script src="js/empleados.js"></script>
+
+
+
     <script>
-    
-    const getTabla = ( ) =>{
+    const getTabla = () => {
         $.ajax({
-            url:"php/getAll.php"
-        }).done( data=>{
-            console.log(data);
+            url: "php/getAll.php"
+        }).done(data => {
             $("#tabla").html(data);
             $('#myTable').DataTable();
-        } )
+        })
     }
 
     getTabla();
