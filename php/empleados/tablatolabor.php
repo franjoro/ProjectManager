@@ -22,6 +22,7 @@
         <td><?php echo $row[4] ?></td>
         <td>
           <a href="#labortable"><button class="btn" onclick="showlabor(<?php echo $row[0]?>)"><i class="far fa-eye"></i></button></a>
+          <a href="#labortable"><button class="btn" onclick="AddHoras(<?php echo $row[0]?>)"><i class="fas fa-plus"></i></button></a>
         </td>
       </tr>
     <?php

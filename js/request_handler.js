@@ -412,6 +412,8 @@ $("#clientProviders").on("click", "tbody td", function () {
     }
   });
 });
+
+
 // ==========================================================Empleados=======================
 //Obtener tabla
 const tablaEmpleados = () => {

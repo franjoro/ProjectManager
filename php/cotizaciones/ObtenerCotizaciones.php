@@ -21,16 +21,17 @@ $query = mysqli_query($mysqli, $sql);
         while ($row = mysqli_fetch_array($query)) {
             $total = $total + $row[3];
         ?>
-            <tr>
-                <td><?php echo $row[0] ?></td>
-                <td><?php echo $row[1] ?></td>
-                <td><?php echo $row[2] ?></td>
-                <td>$<?php echo $row[3] ?></td>
-                <td>
-                    <button class="bnt btn-outline-secondary btn-sm"><i class="fas fa-edit"></i></button>
-                    <button class="bnt btn-outline-danger btn-sm DeleteBtnCtz" onclick="deleteThisCtz(<?php echo $row[4] . ',' . $cliente ?>)"><i class="far fa-trash-alt"></i></button>
-                </td>
-            </tr>
+        <tr>
+            <td><?php echo $row[0] ?></td>
+            <td><?php echo $row[1] ?></td>
+            <td><?php echo $row[2] ?></td>
+            <td>$<?php echo $row[3] ?></td>
+            <td>
+                <button class="bnt btn-outline-danger btn-sm DeleteBtnCtz"
+                    onclick="deleteThisCtz(<?php echo $row[4] . ',' . $cliente ?>)"><i
+                        class="far fa-trash-alt"></i></button>
+            </td>
+        </tr>
         <?php
         }
         ?>
@@ -51,8 +52,10 @@ $query = mysqli_query($mysqli, $sql);
 
 <div class="row">
     <div class="col-6">
-        <a href="php/reportes/linkCotizacion.php?projectCode=<?php echo $cliente ?>"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Generar enlace</button></a>
-        <a href=""><button type="button" class="btn btn-outline-success btn-lg btn-block">Enviar por Email</button></a>
+        <a href="php/reportes/linkCotizacion.php?projectCode=<?php echo $cliente ?>"><button type="button"
+                class="btn btn-outline-secondary btn-lg btn-block">Generate quotes</button></a>
+        <a href=""><button type="button" class="btn btn-outline-success btn-lg btn-block">
+                Generate invoice</button></a>
     </div>
     <div class="col-6">
         <hr>
