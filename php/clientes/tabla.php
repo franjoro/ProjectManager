@@ -38,17 +38,4 @@
     mysqli_close($mysqli);
     ?>
   </tbody>
-  <tfoot>
-    <tr>
-      <th>Name</th>
-      <th>Contact</th>
-      <th>Email</th>
-      <th>Address</th>
-      <th>Phone Office</th>
-      <th>Notes</th>
-      <th>Phone Cel</th>
-      <th>Phone Other</th>
-      <th>Delete</th>
-    </tr>
-  </tfoot>
 </table>

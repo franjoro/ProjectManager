@@ -55,20 +55,4 @@
     mysqli_close($mysqli);
     ?>
     </tbody>
-    <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>SIN</th>
-            <th>Tel.</th>
-            <th>Pin</th>
-            <th>Spouse</th>
-            <th>Tel. Spouse</th>
-            <th>Term</th>
-            <th>Rate</th>
-            <th>Emergency contact</th>
-            <th>Tel. Emergency</th>
-            <th>Delete</th>
-            <th>Restart Password</th>
-        </tr>
-    </tfoot>
 </table>

@@ -61,7 +61,7 @@ include("./php/conexion.php")
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Projects management</a>
-                        <a class="collapse-item" href="materiales.php">Manage costs</a>
+                        <a class="collapse-item" href="materiales.php">Costs manage</a>
                         <a class="collapse-item" href="reportes.php">Reports</a>
                     </div>
                 </div>
@@ -207,8 +207,7 @@ include("./php/conexion.php")
                                     <form id="ProyectosForm">
                                         <div class="form-group">
                                             <label for="inputAddress">Name Project*</label>
-                                            <input type="text" required class="form-control" id="name" name="name"
-                                                placeholder="Name...">
+                                            <input type="text" required class="form-control" id="name" name="name">
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -243,8 +242,7 @@ include("./php/conexion.php")
                                         </div>
                                         <div class="form-group">
                                             <label for="inputAddress2">Notes</label>
-                                            <textarea class="form-control" placeholder="Something to say..."
-                                                name="notes"></textarea>
+                                            <textarea class="form-control" name="notes"></textarea>
                                         </div>
 
                                         <button id="New_button" type="submit"

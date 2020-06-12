@@ -33,14 +33,4 @@
     mysqli_close($mysqli);
     ?>
   </tbody>
-  <tfoot>
-    <tr>
-      <th>Name</th>
-      <th>Address</th>
-      <th>Owner</th>
-      <th>Manager Phone</th>
-      <th>Notes</th>
-      <th>Action</th>
-    </tr>
-  </tfoot>
 </table>

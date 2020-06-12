@@ -64,7 +64,7 @@ if (isset($_SESSION['user'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Projects management</a>
-                        <a class="collapse-item" href="materiales.php">Manage costs</a>
+                        <a class="collapse-item" href="materiales.php">Costs manage</a>
                         <a class="collapse-item" href="reportes.php">Reports</a>
                     </div>
                 </div>

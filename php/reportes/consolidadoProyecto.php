@@ -46,14 +46,11 @@ $proyecto = $_GET['projectCode'];
                                     <?php
                         $sql = "SELECT tb_materiales.descripcion , tb_materiales.cantidad, tb_materiales.costo, tb_materiales.total, tb_providers.name , tb_bill.name, tb_bill.date, tb_bill.paym , tb_bill.GST , tb_bill.PST FROM tb_bill INNER JOIN tb_materiales ON tb_bill.code = tb_materiales.Bill INNER JOIN tb_providers ON tb_bill.providerCode = tb_providers.code WHERE tb_bill.projectCode='".$proyecto."' ";
                         $query = mysqli_query($mysqli, $sql);
-  
-
                         $subtotal = 0;
                         $totaltaxes = 0;
                         $totalNeto = 0;
-
                         while ($row = mysqli_fetch_array($query)) {
-                            $tr = str_replace(" ", ",", $row[2], );
+                            $tr = str_replace(" ", ",", $row[2]);
                             //impuestos
                             $impuesto = 0;
                             $gst ="";
@@ -71,8 +68,7 @@ $proyecto = $_GET['projectCode'];
                             //Totales
                             $subtotal = $subtotal+$row[3];
                             $totaltaxes = $totaltaxes + $ConImpuestos;
-                            $totalNeto = $totalNeto + $total;
-                        ?>
+                            $totalNeto = $totalNeto + $total; ?>
                                     <tr>
 
                                         <td>
@@ -105,7 +101,7 @@ $proyecto = $_GET['projectCode'];
                                             <small class="text-muted"><?php echo $gst?> </small>
                                         </td>
                                         <td class="text-right">
-                                            <strong class="mono">$<?php echo number_format(($total) , 2) ?></strong>
+                                            <strong class="mono">$<?php echo number_format(($total), 2) ?></strong>
                                             <br />
                                         </td>
                                     </tr>
@@ -169,17 +165,18 @@ $proyecto = $_GET['projectCode'];
                         $pagosTotales = 0;
                         
                         while ($row = mysqli_fetch_array($query)) {
-                            
                             $pay = "";
                             if ($row[1] == 1) {
-                                $pay = "Monthly salary";
+                                $resultPay = "Monthly salary";
+                                $pay = 0;
                             } else {
-                                $horastotales = str_replace(":", ".", $row[6]);
-                                
-                                $pay = number_format($horastotales * $row[2], 2);
-                            } 
-                            $pagosTotales = $pagosTotales +$pay;
-                            ?>
+                                $horasTotales = $row[6];
+                                $horasTPunto = $array = explode(":", $horasTotales);
+                                $procentajeDeHora =  number_format(((100*$array[1])/60)/100, 2);
+                                $pay  = number_format(($array[0] * $row[2])+($procentajeDeHora *$row[2]), 2);
+                                $resultPay = $pay;
+                            }
+                            $pagosTotales = $pagosTotales +$pay; ?>
                                     <tr>
                                         <td>
                                             <?php echo $row[0] ?>
@@ -202,7 +199,7 @@ $proyecto = $_GET['projectCode'];
                                             <br />
                                         </td>
                                         <td class="text-right">
-                                            <strong class="mono">$ <?php echo $pay ?></strong>
+                                            <strong class="mono">$ <?php echo $resultPay ?></strong>
                                             <br />
                                             <small class="text-muted">Per Hour:
                                                 $<?php echo number_format($row[2], 2); ?> </small>
@@ -227,11 +224,11 @@ $proyecto = $_GET['projectCode'];
                                 <tbody>
                                     <tr>
                                         <!-- <th class="text-center rowtotal mono">
-                                            <?php // echo $horastotales ?>
+                                            <?php // echo $horastotales?>
                                         </th>
                                         <th class="text-center rowtotal mono">
                                             $
-                                            <?php //echo number_format($timpuesto, 2) ?>
+                                            <?php //echo number_format($timpuesto, 2)?>
                                         </th> -->
                                         <th class="text-center rowtotal mono">
                                             $
@@ -241,6 +238,26 @@ $proyecto = $_GET['projectCode'];
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                          <table class="table table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <!-- <td class="text-center col-xs-1">Total Hours Worked</td> -->
+                                        <td class="text-center col-xs-1">Total Cost</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="text-center rowtotal mono">
+                                            $
+                                            <?php echo number_format($totalNeto +$pagosTotales , 2) ?>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
                     </div>
                 </div>
             </div>

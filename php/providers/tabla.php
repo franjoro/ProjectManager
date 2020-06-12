@@ -36,16 +36,4 @@
     mysqli_close($mysqli);
     ?>
   </tbody>
-  <tfoot>
-    <tr>
-      <th>Name</th>
-      <th>Acct No.</th>
-      <th>Store</th>
-      <th>Mgr</th>
-      <th>Tel.</th>
-      <th>Pay Method</th>
-      <th>Notes</th>
-      <th>Delete</th>
-    </tr>
-  </tfoot>
 </table>

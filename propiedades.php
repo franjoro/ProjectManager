@@ -32,7 +32,7 @@ if (isset($_SESSION['user'])) {
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center"  href="dashboard.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-home"></i>
                 </div>
@@ -62,7 +62,7 @@ if (isset($_SESSION['user'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Projects management</a>
-                        <a class="collapse-item" href="materiales.php">Manage costs</a>
+                        <a class="collapse-item" href="materiales.php">Costs manage</a>
                         <a class="collapse-item" href="reportes.php">Reports</a>
                     </div>
                 </div>
@@ -186,7 +186,7 @@ if (isset($_SESSION['user'])) {
 
 
 
-                        
+
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
@@ -211,8 +211,7 @@ if (isset($_SESSION['user'])) {
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label for="inputAddress">Name *</label>
-                                                <input type="text" required class="form-control" id="name" name="name"
-                                                    placeholder="My Property...">
+                                                <input type="text" required class="form-control" id="name" name="name">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="inputEmail4">OWNER</label>
@@ -231,13 +230,11 @@ if (isset($_SESSION['user'])) {
 
                                             <div class="form-group col-md-6">
                                                 <label for="inputAddress2">Address</label>
-                                                <textarea class="form-control" placeholder="Apartment, studio, or floor"
-                                                    name="address"></textarea>
+                                                <textarea class="form-control" name="address"></textarea>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputAddress2">Notes</label>
-                                                <textarea class="form-control" placeholder="Something..."
-                                                    name="notes"></textarea>
+                                                <textarea class="form-control" name="notes"></textarea>
                                             </div>
                                         </div>
 

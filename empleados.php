@@ -63,7 +63,7 @@ include("./php/conexion.php")
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Projects management</a>
-                        <a class="collapse-item" href="materiales.php">Manage costs</a>
+                        <a class="collapse-item" href="materiales.php">Costs manage</a>
                         <a class="collapse-item" href="reportes.php">Reports</a>
                     </div>
                 </div>
@@ -215,7 +215,7 @@ include("./php/conexion.php")
                                             <div class="form-group col-md-3">
                                                 <label for="inputAddress">Name *</label>
                                                 <input type="text" required class="form-control" id="name" name="name"
-                                                    placeholder="Name...">
+                                                   >
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label for="inputAddress">SIN *</label>
@@ -267,7 +267,7 @@ include("./php/conexion.php")
 
                                         <div class="form-group">
                                             <label for="inputAddress2">Address</label>
-                                            <textarea class="form-control" placeholder="My place..."
+                                            <textarea class="form-control" 
                                                 name="address"></textarea>
 
                                         </div>

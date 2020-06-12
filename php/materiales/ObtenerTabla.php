@@ -45,15 +45,6 @@ if(!$query){
         }
         ?>
     </tbody>
-    <tfoot>
-        <tr>
-            <th>Date</th>
-            <th>Bill number</th>
-            <th>Provider</th>
-            <th>Material cost / Without taxes</th>
-            <th>Action</th>
-        </tr>
-    </tfoot>
 </table>
 <br>
 

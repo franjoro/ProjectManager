@@ -38,15 +38,4 @@
     mysqli_close($mysqli);
     ?>
     </tbody>
-    <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>Client</th>
-            <th>Property</th>
-            <th>Date Start</th>
-            <th>Date End</th>
-            <th>Notes</th>
-            <th>Delete</th>
-        </tr>
-    </tfoot>
 </table>
