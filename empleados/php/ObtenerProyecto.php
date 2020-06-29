@@ -1,12 +1,12 @@
-<option disabled selected value="x" >Select Project</option>
-<?php
-require_once("../../php/conexion.php");
-$sql= "SELECT code, name FROM tb_proyectos";
+<?php require_once("../../php/conexion.php");
+$sql= "SELECT code, name FROM tb_proyectos WHERE status = '0'";
 $query = mysqli_query($mysqli, $sql);
+$array = [];
+
 while ($row = mysqli_fetch_array($query)) {
-    ?>
-    	<option value="<?php echo $row[0] ?>"><?php echo $row[1] ?></option>
-    <?php  
+   $array += [ $row[0] => $row[1] ];
 }
+$arr  = json_encode($array);
+echo $arr;
 mysqli_close($mysqli);
 ?>

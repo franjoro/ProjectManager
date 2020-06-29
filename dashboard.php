@@ -1,6 +1,6 @@
 <?php session_start();
-if(isset($_SESSION['user'])){ 
-include("./php/conexion.php")
+if (isset($_SESSION['user'])) {
+    include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +31,7 @@ include("./php/conexion.php")
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center"  href="dashboard.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-home"></i>
                 </div>
@@ -185,7 +185,7 @@ include("./php/conexion.php")
 
 
 
-                        
+
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
@@ -608,11 +608,19 @@ include("./php/conexion.php")
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/request_handler.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script>
+
+    loader();
+    brProyectoToLocalS();
+    </script>
 </body>
 
 </html>
-<?php 
-} else { 
+<?php
+} else {
     header("location:php/destroy.php");
 }
 ?>

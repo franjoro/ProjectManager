@@ -21,8 +21,7 @@ if(isset($_SESSION['user'])){
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Control Cost Ctr</a>
-
+        <a class="navbar-brand" href="#">Control Ctr Cost</a>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item ">
@@ -44,6 +43,7 @@ if(isset($_SESSION['user'])){
     <div class="p-4">
         <div class="card text-center">
             <div class="card-body">
+                <p>Hours worked in the current month</p>
                 <div id="tabla" class="table-responsive"></div>
             </div>
         </div>

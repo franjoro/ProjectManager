@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 <table id="myTable" class="table table-bordered">
@@ -13,22 +13,27 @@ session_start();
     </thead>
 
     <tbody>
-<?php
+        <?php
 require_once("../../php/conexion.php");
 $empleado = $_SESSION['user'];
 $sql = "SELECT tb_labor.dateDay, tb_labor.startime, tb_labor.endtime, tb_labor.totalhoras, tb_proyectos.name FROM tb_labor INNER JOIN tb_proyectos ON tb_labor.codeProyecto = tb_proyectos.code WHERE tb_labor.codeEmpleado = '".$empleado.":'  ";
 $query = mysqli_query($mysqli, $sql);
 while ($row = mysqli_fetch_array($query)) {
-    ?>
-    <tr>
-        <td><?php echo $row[0]?> </td>
-        <td><?php echo $row[1]?> </td>
-        <td><?php echo $row[2]?> </td>
-        <td><?php echo $row[3]?> </td>
-        <td><?php echo $row[4]?> </td>
+    $split = explode("/", $row[0]);
+    $mesDeltrabjo = $split[0];
+    $mesActual = date("m");
+    if ($mesDeltrabjo === $mesActual) {
+        ?>
+        <tr>
+            <td><?php echo $row[0]?> </td>
+            <td><?php echo $row[1]?> </td>
+            <td><?php echo $row[2]?> </td>
+            <td><?php echo $row[3]?> </td>
+            <td><?php echo $row[4]?> </td>
 
-    </tr>
-<?php
+        </tr>
+        <?php
+    }
 }
 echo mysqli_error($mysqli);
 mysqli_close($mysqli);

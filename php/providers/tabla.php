@@ -6,7 +6,6 @@
       <th>Store</th>
       <th>Mgr</th>
       <th>Tel.</th>
-      <th>Pay Method</th>
       <th>Notes</th>
       <th>Delete</th>
     </tr>
@@ -25,8 +24,7 @@
         <td data-columna="store" data-tabla="tb_providers" data-code="<?php echo $code?>"><?php echo $row[3] ?></td>
         <td data-columna="mgr" data-tabla="tb_providers" data-code="<?php echo $code?>"><?php echo $row[4] ?></td>
         <td data-columna="tel" data-tabla="tb_providers" data-code="<?php echo $code?>"><?php echo $row[5] ?></td>
-        <td data-columna="paymethod" data-tabla="tb_providers" data-code="<?php echo $code?>"><?php echo $row[6] ?></td>
-        <td data-columna="notes" data-tabla="tb_providers" data-code="<?php echo $code?>"><?php echo $row[7] ?></td>
+        <td data-columna="notes" data-tabla="tb_providers" data-code="<?php echo $code?>"><?php echo $row[6] ?></td>
         <td data-tabla="delete" data-code="<?php echo $code?>">
           <button class="btn"><i class="fas fa-trash"></i></button>
         </td>

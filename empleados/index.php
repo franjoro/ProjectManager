@@ -1,6 +1,8 @@
 <?php
 session_start();
+include_once("../php/conexion.php");
 if(isset($_SESSION['user'])){ 
+$row = mysqli_fetch_array(mysqli_query($mysqli , "SELECT name FROM `tb_empleados` WHERE code ='".$_SESSION['user']."' "));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +22,7 @@ if(isset($_SESSION['user'])){
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Control Cost Ctr</a>
+        <a class="navbar-brand" href="#">Control Ctr Cost</a>
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -44,7 +46,8 @@ if(isset($_SESSION['user'])){
     <div class="p-4">
         <div class="card text-center">
             <div class="card-header">
-                Current Workday Date : <b><span id="fecha"></span></b>
+                Current Workday Date : <b><span id="fecha"></span></b> 
+                Welcome: <b><?php echo $row[0] ?> </b>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -87,6 +90,7 @@ if(isset($_SESSION['user'])){
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="js/empleados.js"></script>
+    <script> brProyectoToLocalS() </script>
 </body>
 
 </html>

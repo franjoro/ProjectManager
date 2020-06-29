@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(isset($_SESSION['user'])){ 
-include("./php/conexion.php")
+if (isset($_SESSION['user'])) {
+    include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +29,9 @@ include("./php/conexion.php")
 <style>
 .materialesDiv {
     display: none;
+}
+hr.new2 {
+  border-top: 1px dashed black;
 }
 </style>
 
@@ -190,10 +193,6 @@ include("./php/conexion.php")
                                 </a>
                             </div>
                         </li>
-
-
-
-
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
@@ -208,8 +207,8 @@ include("./php/conexion.php")
                                 <label for="inputEmail4">Select a project to continue</label>
                                 <select class="form-control" name="ProjectSelectorCtciones"
                                     id="ProjectSelectorCtciones">
-                                    <option disabled selected>Elegir proyecto</option>
-                                    <option>Loading</option>
+                                    <option disabled selected></option>
+                                    <option value="0">* New Project *</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2 invisible" id="newCliente">
@@ -240,30 +239,29 @@ include("./php/conexion.php")
                 </div>
                 <div class="card shadow mb-4 materialesDiv">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Add materials for customer quotes</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Enter Scopes</h6>
                     </div>
                     <div class="card-body">
-                        <form id="rowsC">
+                        <form id="rowsC" >
+                            
                     </div>
                     <div class="card-footer">
 
                         <button class="btn btn-success float-right" type="submit">Insert</button>
 
                         </form>
-                        <button class="btn btn-success float-left" id="addRowBtnC">Add new row</i></button>
+                        <!-- <button class="btn btn-success float-left" id="addRowBtnC">Add new Work Zone</i></button> -->
                     </div>
                 </div>
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">
-                            Fields to be included in the report</h6>
+                            Enter Scopes</h6>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <div id="tablaMateriales">
-                                <h5>Select project to continue</h5>
-                            </div>
+                        <h5>Select project to continue</h5>
+                        <div id="tablaMateriales" class="container-fluid">
                         </div>
                     </div>
                 </div>
@@ -335,21 +333,20 @@ include("./php/conexion.php")
     <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-    <script src="js/request_handler.js"></script>
     <script src="js/jquery.mask.js"></script>
-    <script src="js/materiales.js"></script>
+    <script src="js/cotizaciones.js"></script>
 
 
     <script>
     $(document).ready(function() {
-        crearMascara()
+        fillSelectProyectos()
     })
     </script>
 </body>
 
 </html>
-<?php 
-} else { 
+<?php
+} else {
     header("location:php/destroy.php");
 }
 ?>

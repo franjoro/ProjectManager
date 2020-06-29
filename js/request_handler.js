@@ -85,6 +85,17 @@ const crearMascara = () => {
   });
 };
 
+//GuardarProyecto en Local
+const brProyectoToLocalS = async () => {
+  let data = await $.ajax("empleados/php/ObtenerProyecto.php");
+  localStorage.setItem("proyectos", data);
+  swal.close();
+};
+
+
+
+
+
 // ==========================================================CLIENTES=======================
 //Obtener tabla
 
@@ -1014,192 +1025,6 @@ const deleteThisCosto = (id, cliente) => {
         }).done(() => {
           $.ajax({
             url: "php/materiales/ObtenerTabla.php",
-            data: { cliente },
-          }).done((data) => {
-            $("#tablaMateriales").html(data);
-            $("#dataTable").DataTable();
-          });
-          res();
-        });
-      });
-
-      Promise.all([p1]).then(
-        Swal.fire("Deleted!", "Your file has been deleted.", "success")
-      );
-    }
-  });
-};
-// Cotizaciones===================================================
-imprimirFila(contador, false);
-
-$("#addRowBtnC").click(() => {
-  contador = contador + 1;
-  imprimirFila(contador, false);
-  crearMascara();
-});
-
-$("#rowsC")
-  .on("keyup", ".precioClase", function () {
-    const contadorDeturno = $(this).data("turno");
-    const inputTotal = $("#total" + contadorDeturno);
-    const cantidad = $("#cantidad" + contadorDeturno).val();
-    const precio = $(this).val().replace(",", "");
-    const multiplicacion = Number(cantidad) * Number(precio);
-    inputTotal.val(multiplicacion.toFixed(2));
-  })
-  .on("focusout", ".precioClase", function () {
-    if ($(this).val() === "") $(this).val("0");
-  })
-  .on("focusin", ".precioClase", function () {
-    if ($(this).val() === "0") $(this).val("");
-  })
-  .on("change", ".cantidadClase", function () {
-    const contadorDeturno = $(this).data("turno");
-    const inputTotal = $("#total" + contadorDeturno);
-    const precio = $("#precio" + contadorDeturno)
-      .val()
-      .replace(",", "");
-    const multiplicacion = Number(precio) * Number($(this).val());
-    inputTotal.val(multiplicacion.toFixed(2));
-  })
-  // Insertar============ / Cotizaciones
-  .submit(function (event) {
-    event.preventDefault();
-    $(".precioClase").each(function () {
-      console.log($(this).val());
-      var text = $(this).val().replace(",", " ");
-      $(this).val(text.trim());
-    });
-    const ProjectSelectorCtciones = $("#ProjectSelectorCtciones")
-      .children("option:selected")
-      .val();
-    if (ProjectSelectorCtciones == "x")
-      return alert("Debe Seleccionar proyecto");
-    const NewP = $("#generico").val();
-    const NewCliente = $("#clienteSelectNew").children("option:selected").val();
-    const serializedData = $(this).serialize();
-
-    $.ajax({
-      url: `php/cotizaciones/insert.php?contador=${contador}&proyectoId=${ProjectSelectorCtciones}&generico=${NewP}&cliente=${NewCliente}`,
-      type: "post",
-      data: serializedData,
-      //   beforeSend: () => {
-      //     $("#New_button").css("display", "none");
-      //     $("#loader").removeClass("invisible").addClass("visible");
-      //   },
-    }).done(function (data) {
-      $("#generico").val("");
-      contador = 1;
-      $("#rowsC").html("");
-      imprimirFila(contador, false);
-      crearMascara();
-      $("#rowsC")[0].reset();
-
-      const select = new Promise((resolve, reject) => {
-        $.ajax({
-          url: "php/cotizaciones/ObtenerProyecto.php",
-        }).done((data) => {
-          bPCtz = true;
-          $("#ProjectSelectorCtciones").html(data);
-          resolve();
-        });
-      });
-
-      const ShowCoti = new Promise((resolve, reject) => {
-        $.ajax({
-          url: "php/cotizaciones/ObtenerCotizaciones.php",
-          data: { cliente: ProjectSelectorCtciones },
-        }).done((data) => {
-          $(".materialesDiv").css("display", "nonre");
-          $("#btnAddMaterial").removeClass("visible").addClass("invisible");
-          $("#tablaMateriales").html(data);
-          $("#dataTable").DataTable();
-          resolve();
-        });
-      });
-
-      Promise.all([select, ShowCoti]).then(AlertaExito());
-    });
-  })
-  .on("click", ".BtnRowErase", function () {
-    let contadorDeturno = $(this).data("turno");
-    contador = contador - 1;
-    $(".turno" + contadorDeturno).remove();
-  });
-//SELECT DE CLIENTES
-let bClt = false;
-$("#clienteSelectNew").hover(() => {
-  if (bClt) return;
-  $.ajax({
-    url: "php/proyecto/ObtenerClientes.php",
-  }).done((data) => {
-    bClt = true;
-    $("#clienteSelectNew").html(data);
-  });
-});
-
-// SELECT DE TIPO  DE PROYECTO
-$("#KindPro").change(() => {
-  const valor = $("#KindPro").children("option:selected").val();
-  const mesActual = ("0" + (new Date().getMonth() + 1)).slice(-2);
-  const NombreNuevoProyecto = $("#generico").val(valor + mesActual);
-});
-
-//SELECT de proyectos
-let bPCtz = false;
-$("#ProjectSelectorCtciones")
-  .hover(() => {
-    if (bPCtz) return;
-    $.ajax({
-      url: "php/cotizaciones/ObtenerProyecto.php",
-    }).done((data) => {
-      bPCtz = true;
-      $("#ProjectSelectorCtciones").html(data);
-    });
-  })
-  .change(() => {
-    const selectedProject = $("#ProjectSelectorCtciones")
-      .children("option:selected")
-      .val();
-    if (selectedProject == 0) {
-      $("#newInput").removeClass("invisible").addClass("visible");
-      $("#newCliente").removeClass("invisible").addClass("visible");
-      $("#newKind").removeClass("invisible").addClass("visible");
-    } else {
-      $("#newInput").removeClass("visible").addClass("invisible");
-      $("#newCliente").removeClass("visible").addClass("invisible");
-      $("#newKind").removeClass("visible").addClass("invisible");
-    }
-
-    $.ajax({
-      url: "php/cotizaciones/ObtenerCotizaciones.php",
-      data: { cliente: selectedProject },
-    }).done((data) => {
-      $(".materialesDiv").css("display", "flex");
-      $("#btnAddMaterial").removeClass("invisible").addClass("visible");
-      $("#tablaMateriales").html(data);
-      $("#dataTable").DataTable();
-    });
-  });
-
-//Eliminar Ctz
-const deleteThisCtz = (id, cliente) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this! ID ctz: " + id,
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.value) {
-      const p1 = new Promise((res, rej) => {
-        $.ajax({
-          url: `php/cotizaciones/eliminarCtz.php?id=${id}`,
-        }).done(() => {
-          $.ajax({
-            url: "php/cotizaciones/ObtenerCotizaciones.php",
             data: { cliente },
           }).done((data) => {
             $("#tablaMateriales").html(data);

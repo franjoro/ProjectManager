@@ -35,10 +35,8 @@ const loader = () => {
   });
 };
 
-
-
 let numeroTotal = 1;
-let ShowIfExistSomething = false; 
+let ShowIfExistSomething = false;
 
 // NUEVO SIN INGRESO A BASE
 const NewWork = () => {
@@ -47,8 +45,6 @@ const NewWork = () => {
                                     <td>
                                         <div class="form-group input-group-sm">
                                             <select name="proyecto" class="form-control" id="proyecto">
-                                                <option selected disabled value="x" >Select Project...</option>
-                                                <option disabled>Loading...</option>
                                             </select>
                                         </div>
                                     </td>
@@ -59,7 +55,7 @@ const NewWork = () => {
                                         </div>
                                         <div class="form-group input-group-sm">
                                             <button type="button" class="btn btn-primary btn-sm" onclick="insertarEntrada()">
-                                                Registrar
+                                                Save
                                             </button>
                                         </div>
                                     </td>
@@ -83,7 +79,7 @@ const WorkToRegiOut = (id, actual) => {
                                         </div>
                                         <div class="form-group input-group-sm">
                                             <button type="button" class="btn btn-primary btn-sm" onclick="insertarSalida(${actual.code}, '${actual.startime}')" >
-                                                Registrar
+                                                Save
                                             </button>
                                         </div>
                                     </td>
@@ -109,22 +105,20 @@ const WorkDone = (id, actual) => {
 const getTodayDate = () => {
   let date = new Date();
   let m = ("0" + (date.getMonth() + 1)).slice(-2);
-  let d = date.getDay();
+  let d = String(date.getDate()).padStart(2, "0");
   let y = date.getFullYear();
-  return `${d}/${m}/${y}`;
+  return `${m}/${d}/${y}`;
 };
 
 $("#newbtn").click(() => {
-  if(ShowIfExistSomething) NewWork() ; return PutTimePicker(); 
+  if (ShowIfExistSomething) NewWork();
+  return PutTimePicker();
   Swal.fire({
     icon: "warning",
     title: "Oops...",
     text: "you have to close your current job to start another!",
-  })
- 
+  });
 });
-
-
 
 const NumeroDeTrabajoToday = () => {
   loader();
@@ -141,11 +135,15 @@ const NumeroDeTrabajoToday = () => {
       data.data.forEach((actual, id) => {
         numeroTotal = id + 1;
         if (actual.status == 0) WorkToRegiOut(id + 1, actual);
-        if (actual.status == 1) {WorkDone(id + 1, actual) ; ShowIfExistSomething  = true ; numeroTotal++; };
+        if (actual.status == 1) {
+          WorkDone(id + 1, actual);
+          ShowIfExistSomething = true;
+          numeroTotal++;
+        }
       });
     }
     PutTimePicker();
-    swal.close();
+
   });
 };
 
@@ -158,14 +156,20 @@ $(document).ready(function () {
 let banderaDown = false;
 $("#turno").on("focus", "#proyecto", function () {
   if (banderaDown) return;
-  $.ajax({
-    url: "php/ObtenerProyecto.php",
-  }).done((data) => {
-    banderaDown = true;
-    $("#proyecto").html(data);
-  });
+  let data = localStorage.getItem("proyectos");
+  data = JSON.parse(data);
+
+  for (const prop in data) {
+    $("#proyecto").append(`<option value="${prop}">${data[prop]}</option>`)
+  }
+  banderaDown = true;
 });
 
+const brProyectoToLocalS = async () => {
+  let data = await $.ajax("php/ObtenerProyecto.php");
+  localStorage.setItem("proyectos", data);
+  swal.close();
+};
 
 const calculardiferencia = (hora_inicio, hora_final) => {
   // Expresión regular para comprobar formato
@@ -191,10 +195,6 @@ const calculardiferencia = (hora_inicio, hora_final) => {
   const total = horas + ":" + (minutos < 10 ? "0" : "") + minutos;
   return total;
 };
-
-
-
-
 
 // Insertar Hora de entrada y proyecto
 const insertarEntrada = () => {
@@ -232,7 +232,7 @@ const insertarEntrada = () => {
 };
 // Insertar Hora de SALIDA y horas
 
-const insertarSalida = (code,entrada) => {
+const insertarSalida = (code, entrada) => {
   const salida = $("#salida").val();
   const horas = calculardiferencia(entrada, salida);
   if (code === "") {
@@ -251,22 +251,21 @@ const insertarSalida = (code,entrada) => {
       $.ajax({
         type: "POST",
         url: "php/insertarSalida.php?date=" + getTodayDate(),
-        data: { code, salida, horas  },
+        data: { code, salida, horas },
       }).done((data) => {
         console.log(data);
-        Swal.fire("OK", "Work Done", "success").then( () =>{location.reload()});
-
+        Swal.fire("OK", "Work Done", "success").then(() => {
+          location.reload();
+        });
       });
     }
   });
 };
 
-
-
 // ACTUALIZAR PASS USER
-$("#change").click( () =>{  
+$("#change").click(() => {
   const toSend = JSON.stringify($("#change").data().id);
-  console.log(toSend)
+  console.log(toSend);
   Swal.fire({
     title: "Change my password",
     text: "Here you can edit your password ",
@@ -291,4 +290,3 @@ $("#change").click( () =>{
     }
   });
 });
-

@@ -13,7 +13,7 @@ $proyecto = $_GET['projectCode'];
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css" />
-    <title>Hello, world!</title>
+    <title>Proyect Details</title>
 </head>
 
 <body>
@@ -151,7 +151,6 @@ $proyecto = $_GET['projectCode'];
                                     <tr>
                                         <th class="text-center colfix">Employee</th>
                                         <th class="text-center colfix">Work Day</th>
-                                        <th class="text-center colfix">Start - End Hour</th>
                                         <th class="text-center colfix">Hours Worked</th>
                                         <th class="text-center colfix">Payment</th>
                                     </tr>
@@ -186,13 +185,6 @@ $proyecto = $_GET['projectCode'];
                                                 <?php echo $row[3] ?> </span>
                                             <br />
                                             <!-- <small class="text-muted">Before Tax</small> -->
-                                        </td>
-                                        <td class="text-right">
-                                            <span class="mono">Start:
-                                                <?php echo  $row[4] ?></span>
-                                            <br />
-                                            <small class="text-muted">End : <?php echo $row[5] ?>
-                                            </small>
                                         </td>
                                         <td class="text-right">
                                             <span class="mono"><?php echo $row[6] ?></span>

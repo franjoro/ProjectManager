@@ -235,11 +235,6 @@ include("./php/conexion.php")
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputAddress">Pay Method *</label>
-                      <input type="text" required class="form-control" name="pay">
-                    </div>
-
-                    <div class="form-group">
                       <label for="inputAddress2">Notes</label>
                       <textarea class="form-control"  name="notes"></textarea>
 

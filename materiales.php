@@ -39,7 +39,7 @@ include("./php/conexion.php")
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center"  href="dashboard.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-home"></i>
                 </div>
@@ -193,7 +193,7 @@ include("./php/conexion.php")
 
 
 
-                        
+
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
@@ -227,9 +227,6 @@ include("./php/conexion.php")
                     </div>
                     <div class="card-body">
                         <form id="rows">
-
-
-
                             <div class="form-row">
                                 <div class="form-group col-md-3">
                                     <label for="inputEmail4">Proovedor</label>
@@ -261,11 +258,13 @@ include("./php/conexion.php")
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input type="checkbox" id="gst" name="gst" checked value="1" class="custom-control-input">
+                                    <input type="checkbox" id="gst" name="gst" checked value="1"
+                                        class="custom-control-input">
                                     <label class="custom-control-label" for="gst">GST 5%</label>
                                 </div>
                                 <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input type="checkbox" id="pst" name="pst" checked value="1" class="custom-control-input">
+                                    <input type="checkbox" id="pst" name="pst" checked value="1"
+                                        class="custom-control-input">
                                     <label class="custom-control-label" for="pst">PST 7%</label>
                                 </div>
                             </div>
@@ -384,6 +383,48 @@ include("./php/conexion.php")
     })
     </script>
 </body>
+
+
+
+
+
+<div class="form-row">
+    <div class="col-md-11"> <label for="place"> Work Zone</label> <input type="text" id="place" class="form-control">
+    </div>
+    <div class="col-md-1"><a class="btn btn-info text-white btn-sm">New Category</a></div>
+</div>
+<div id="categorias">
+<div class="card">
+    <div class="card-body">
+        <div class="row justify-content-start">
+            <div class="col-md-3 col-sm-3"> <label for="type">Job categories</label> <select name="type" id="type"
+                    class="form-control">
+                    <option value="DEMOLITION">DEMOLITION</option>
+                    <option value="ELECTRICAL">ELECTRICAL</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-sm-2"> <label for="precio">Price</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend"> <span class="input-group-text">$</span> </div> <input type="text"
+                        class="form-control" name="price" id="price">
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-md-8 works${contadorActual}"> <label for="works">Work ${contador}</label> <textarea
+                    class="form-control" name="work${contadorActual}" rows="1"></textarea> </div>
+            <div class="col-md-1"> <label for="precio">Action</label> <a class="btn btn-info btnAddrWork text-white"
+                    data-turno="${contadorActual}" data-turnoW="1">Add work</a> </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
 
 </html>
 <?php 
