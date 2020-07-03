@@ -29,13 +29,14 @@ if(!$query){
         <?php
         while ($row = mysqli_fetch_array($query)) {
             $total = $total + $row[3];
+            $code = $row[4];
         ?>
         <tr>
-            <td><?php echo $row[1] ?></td>
-            <td><?php echo $row[0] ?></td>
-            <td><?php echo $row[2] ?></td>
-            <td>$<?php echo number_format($row[3], 2)  ?></td>
-            <td>
+            <td data-tabla="NotEditable"><?php echo $row[1] ?></td>
+            <td data-columna="name" data-tabla="tb_bill" data-code="<?php echo $code?>"><?php echo $row[0] ?></td>
+            <td data-tabla="NotEditable"><?php echo $row[2] ?></td>
+            <td data-tabla="NotEditable">$<?php echo number_format($row[3], 2)  ?></td>
+            <td  data-tabla="delete" data-code="<?php echo $code?>">
                 <button class="bnt btn-outline-danger btn-sm "
                     onclick="deleteThisCosto(<?php echo $row[4] . ',' . $cliente ?>)"><i
                         class="far fa-trash-alt"></i></button>

@@ -1,7 +1,7 @@
 <?php
 require_once('../conexion.php');
 $id = $_GET['projectCode'];
-$sqlDatos = "SELECT descripcion,cantidad, costo, total FROM tb_cotizaciones WHERE projectCode  = '" . $id . "'";
+$sqlDatos = "SELECT workZone, total, code FROM tb_workzone WHERE codeProyecto='".$id."'";
 $querydatos = mysqli_query($mysqli, $sqlDatos);
 
 $sqlClient = "SELECT
@@ -43,8 +43,8 @@ $datos = mysqli_fetch_array($queryClient);
                     <div class="media">
                         <div class="media-left">
                             <img class="media-object logo" src="logo.png" />
-                            <h4 class="text-muted">7787 Oak Street, Vancouver,  BC V6P 4A4
-                               <br> Tel (604) 592-0237</h4>
+                            <h4 class="text-muted">7787 Oak Street, Vancouver, BC V6P 4A4
+                                <br> Tel (604) 592-0237</h4>
                         </div>
                     </div>
                 </div>
@@ -94,8 +94,7 @@ $datos = mysqli_fetch_array($queryClient);
                 <table class="table table-bordered table-condensed">
                     <thead>
                         <tr>
-                            <th> <b> Item / Details </b></th>
-                            <th class="text-center colfix">Unit Cost</th>
+                            <th class="text-center"><b>DESCRIPTION</b></th>
                             <th class="text-center colfix">Sum Cost</th>
                             <th class="text-center colfix">Tax</th>
                             <th class="text-center colfix">Total</th>
@@ -105,49 +104,59 @@ $datos = mysqli_fetch_array($queryClient);
 
 
                         <?php
-                        $tbruto = 0;
-                        $timpuesto = 0;
-                        $ttotal = 0;
+                        $subtotal = 0;
+                        $subTax = 0;
+                        $totalgeneral = 0;
 
                         while ($row = mysqli_fetch_array($querydatos)) {
-                            $dinerosinComa = str_replace(",","",$row[2]);
-                            $bruto = $dinerosinComa * $row[1];
-                            $impuesto = $bruto * 5 / 100;
-                            $total = ($bruto * 5 / 100) + $bruto;
+                        $code = $row[2];
+                        
+                        $sql = "SELECT tb_workc.category, tb_workc.total, tb_cotizaciones.descripcion FROM `tb_workc` INNER JOIN tb_cotizaciones ON tb_workc.code = tb_cotizaciones.codeWorkC WHERE tb_workc.codeZone ='".$code."' ";
+                        $query = mysqli_query($mysqli,$sql);
 
-                            $tbruto = $tbruto + $bruto;
-                            $timpuesto = $timpuesto + $impuesto;
-                            $ttotal = $ttotal + $total;
+                        //variables
+                            $categoria="";
+                            $precioConImp = ($row[1] *5)/100;
+                            $sumaPreciomasImpu = $row[1] + $precioConImp;
 
+                            //totales 
+                            $subtotal = $subtotal +$row[1];
+                            $subTax = $subTax + $precioConImp;
+                            $totalgeneral = $totalgeneral +$sumaPreciomasImpu; 
                         ?>
-
                         <tr>
                             <td>
-                                <?php echo $row[0] ?>
-
+                                <b><ins><?php echo strtoupper($row[0]) ?>:</ins></b><br>
+                        <?php while($rows = mysqli_fetch_array($query)){ ?>
+                                <?php 
+                                    if($rows[0] !== $categoria){
+                                        echo "<p><b>".$rows[0]."</b> $".$rows[1]."</p> <p>-".$rows[2]."</p>";
+                                    }else{
+                                        echo "<p>-".$rows[2]."</p>";
+                                    }
+                                    ?>
+                                
+                        <?php 
+                    $categoria = $rows[0];
+                    } ?>
                             </td>
                             <td class="text-right">
-                                <span class="mono">$ <?php echo number_format($dinerosinComa, 2) ?></span>
+                                <span class="mono">$ <?php echo number_format($row[1],2)  ?>  </span>
                                 <br>
-                                <small class="text-muted">Before Tax</small>
+                                <small class="text-muted"> Units</small>
                             </td>
                             <td class="text-right">
-                                <span class="mono">$ <?php echo number_format($bruto, 2)  ?></span>
-                                <br>
-                                <small class="text-muted"><?php echo $row[1] ?> Units</small>
-                            </td>
-                            <td class="text-right">
-                                <span class="mono">+ $<?php echo number_format($impuesto, 2) ?></span>
+                                <span class="mono">+ $<?php echo number_format($precioConImp,2)?></span>
                                 <br>
                                 <small class="text-muted">GST 5% </small>
                             </td>
                             <td class="text-right">
-                                <strong class="mono">$<?php echo number_format($total, 2) ?></strong>
+                                <strong class="mono">$ <?php echo number_format($sumaPreciomasImpu,2)  ?> </strong>
                                 <br>
                             </td>
                         </tr>
-
                         <?php
+                        $categoria ="";
                         }
                         ?>
                     </tbody>
@@ -166,9 +175,9 @@ $datos = mysqli_fetch_array($queryClient);
                     </thead>
                     <tbody>
                         <tr>
-                            <th class="text-center rowtotal mono">$ <?php echo number_format($tbruto, 2) ?></th>
-                            <th class="text-center rowtotal mono">$ <?php echo number_format($timpuesto, 2) ?></th>
-                            <th class="text-center rowtotal mono">$ <?php echo number_format($ttotal, 2) ?></th>
+                            <th class="text-center rowtotal mono">$ <?php echo number_format($subtotal,2)?> </th>
+                            <th class="text-center rowtotal mono">$ <?php echo number_format($subTax,2)?></th>
+                            <th class="text-center rowtotal mono">$ <?php echo number_format($totalgeneral,2)?></th>
                         </tr>
                     </tbody>
                 </table>

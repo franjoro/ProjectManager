@@ -209,8 +209,7 @@ include("./php/conexion.php")
                             <div class="form-group col-md-2">
                                 <label for="inputEmail4">Choose project</label>
                                 <select class="form-control" name="ProjectSelectorCostos" id="ProjectSelectorCostos">
-                                    <option disabled selected>Elegir proyecto</option>
-                                    <option>Loading</option>
+                                    <option disabled selected></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2 invisible " id="newInput">
@@ -377,7 +376,7 @@ include("./php/conexion.php")
     <script>
     $(document).ready(function() {
         crearMascara()
-
+        fillSelectProyectos()
         $("#date").datepicker();
 
     })
@@ -386,39 +385,6 @@ include("./php/conexion.php")
 
 
 
-
-
-<div class="form-row">
-    <div class="col-md-11"> <label for="place"> Work Zone</label> <input type="text" id="place" class="form-control">
-    </div>
-    <div class="col-md-1"><a class="btn btn-info text-white btn-sm">New Category</a></div>
-</div>
-<div id="categorias">
-<div class="card">
-    <div class="card-body">
-        <div class="row justify-content-start">
-            <div class="col-md-3 col-sm-3"> <label for="type">Job categories</label> <select name="type" id="type"
-                    class="form-control">
-                    <option value="DEMOLITION">DEMOLITION</option>
-                    <option value="ELECTRICAL">ELECTRICAL</option>
-                </select>
-            </div>
-            <div class="col-md-2 col-sm-2"> <label for="precio">Price</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend"> <span class="input-group-text">$</span> </div> <input type="text"
-                        class="form-control" name="price" id="price">
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-end">
-            <div class="col-md-8 works${contadorActual}"> <label for="works">Work ${contador}</label> <textarea
-                    class="form-control" name="work${contadorActual}" rows="1"></textarea> </div>
-            <div class="col-md-1"> <label for="precio">Action</label> <a class="btn btn-info btnAddrWork text-white"
-                    data-turno="${contadorActual}" data-turnoW="1">Add work</a> </div>
-        </div>
-    </div>
-</div>
-</div>
 
 
 

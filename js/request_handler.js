@@ -92,10 +92,6 @@ const brProyectoToLocalS = async () => {
   swal.close();
 };
 
-
-
-
-
 // ==========================================================CLIENTES=======================
 //Obtener tabla
 
@@ -424,7 +420,6 @@ $("#clientProviders").on("click", "tbody td", function () {
   });
 });
 
-
 // ==========================================================Empleados=======================
 //Obtener tabla
 const tablaEmpleados = () => {
@@ -489,7 +484,7 @@ const deleteEmpleado = (id) => {
       Promise.all([p1]).then(
         Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
           () => {
-           tablaEmpleados()
+            tablaEmpleados();
           }
         )
       );
@@ -500,7 +495,8 @@ const deleteEmpleado = (id) => {
 const restartPassword = (id) => {
   Swal.fire({
     title: "Are you sure?",
-    text: "You are about to reset this user's password, it will be the same as their assigned pin" ,
+    text:
+      "You are about to reset this user's password, it will be the same as their assigned pin",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -517,17 +513,17 @@ const restartPassword = (id) => {
         });
       });
       Promise.all([p1]).then(
-        Swal.fire("Updated!", "the user can change the password in their profile", "success").then(
-          () => {
-           tablaEmpleados()
-          }
-        )
+        Swal.fire(
+          "Updated!",
+          "the user can change the password in their profile",
+          "success"
+        ).then(() => {
+          tablaEmpleados();
+        })
       );
     }
   });
 };
-
-
 
 // ACTUALIZAR EMPLEADOS
 $("#tableEmpleado").on("click", "tbody td", function () {
@@ -603,6 +599,7 @@ $("#ProyectosForm").submit(function (event) {
       if ($("#defaultCheck1").prop("checked") == true) {
         window.navigate("cotizaciones.php");
       }
+      brProyectoToLocalS();
       return;
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
@@ -636,27 +633,28 @@ $("#client")
 
 const deleteProyecto = (id) => {
   Swal.fire({
-    title: "Are you sure?",
+    title: "Close Project?",
     text: "You won't be able to revert this! ID ctz: " + id,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
+    confirmButtonText: "Yes, Close it!",
   }).then((result) => {
     if (result.value) {
       const p1 = new Promise((res, rej) => {
         $.ajax({
           url: `php/proyecto/eliminar.php?id=${id}`,
         }).done(() => {
+          brProyectoToLocalS();
           res();
         });
       });
 
       Promise.all([p1]).then(
-        Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+        Swal.fire("Closed!", "Your file has been Closed.", "success").then(
           () => {
-            location.reload();
+            tablaProyecto();
           }
         )
       );
@@ -866,17 +864,7 @@ let banderaDownProo = false;
 let contador = 1;
 imprimirFila(contador, true);
 //SELECT DE PROYECTO Materiales
-let CostosBool = false;
 $("#ProjectSelectorCostos")
-  .hover(() => {
-    if (CostosBool) return;
-    $.ajax({
-      url: "php/cotizaciones/ObtenerProyecto.php",
-    }).done((data) => {
-      CostosBool = true;
-      $("#ProjectSelectorCostos").html(data);
-    });
-  })
   //Obtener tabla
   .change(() => {
     const selectedProject = $("#ProjectSelectorCostos")
@@ -904,6 +892,17 @@ $("#addRowBtn").click(() => {
   imprimirFila(contador, true);
   crearMascara();
 });
+
+//Llenar de localstorage
+const fillSelectProyectos = () => {
+  let data = localStorage.getItem("proyectos");
+  data = JSON.parse(data);
+  for (const prop in data) {
+    $("#ProjectSelectorCostos").append(
+      `<option value="${prop}">${data[prop]}</option>`
+    );
+  }
+};
 
 $("#rows")
   .on("keyup", ".precioClase", function () {
@@ -936,7 +935,6 @@ $("#rows")
   })
   .on("mouseenter ", ".proovedores", function () {
     if (banderaDownProo) return;
-    console.log("Hover ");
     $.ajax({
       url: "php/materiales/ObtenerProovedores.php",
     }).done((data) => {
@@ -948,8 +946,9 @@ $("#rows")
   // Insertar============ / materiales
   .submit(function (event) {
     event.preventDefault();
+    loader();
     $(".precioClase").each(function () {
-      console.log($(this).val());
+      // console.log($(this).val());
       var text = $(this).val().replace(",", " ");
       $(this).val(text.trim());
     });
@@ -963,12 +962,11 @@ $("#rows")
       url: `php/materiales/insert.php?contador=${contador}&proyectoId=${selectedProject}&generico=${NewP}`,
       type: "post",
       data: serializedData,
-      //   beforeSend: () => {
-      //     $("#New_button").css("display", "none");
-      //     $("#loader").removeClass("invisible").addClass("visible");
-      //   },
     }).done(function (data) {
       console.log(data);
+      if (data === "billAlreadyExist") {
+        return alertabillrepeat();
+      }
       $("#generico").val("");
       contador = 1;
       $("#rows")[0].reset();
@@ -979,15 +977,15 @@ $("#rows")
       crearMascara();
       $("#newInput").removeClass("visible").addClass("invisible");
 
-      const select = new Promise((resolve, reject) => {
-        $.ajax({
-          url: "php/cotizaciones/ObtenerProyecto.php",
-        }).done((data) => {
-          bPCtz = true;
-          $("#ProjectSelectorCostos").html(data);
-          resolve();
-        });
-      });
+      // const select = new Promise((resolve, reject) => {
+      //   $.ajax({
+      //     url: "php/cotizaciones/ObtenerProyecto.php",
+      //   }).done((data) => {
+      //     bPCtz = true;
+      //     $("#ProjectSelectorCostos").html(data);
+      //     resolve();
+      //   });
+      // });
 
       const ShowCoti = new Promise((resolve, reject) => {
         const selectedProject = $("#ProjectSelectorCostos")
@@ -1005,7 +1003,10 @@ $("#rows")
         });
       });
 
-      Promise.all([ShowCoti, select]).then(AlertaExito());
+      Promise.all([ShowCoti]).then( ()=>{
+        swal.close();
+        AlertaExito();
+      }  );
     });
   });
 const deleteThisCosto = (id, cliente) => {
@@ -1039,4 +1040,62 @@ const deleteThisCosto = (id, cliente) => {
       );
     }
   });
+};
+
+// ACTUALIZAR BILL
+$("#tablaMateriales").on("click", "tbody td", function () {
+  const toSend = $(this).data();
+  if (toSend.tabla === "delete") {
+    return deletePropiedades(toSend.code);
+  }
+  if (toSend.tabla === "NotEditable") {
+    return NotEditable();
+  }
+  Swal.fire({
+    title: "Edit cell",
+    text:
+      "You will edit a cell this will be reflected in the reporting information ",
+    input: "text",
+    inputValue: $(this).text(),
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, edit it!",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "php/edit.php",
+        data: {
+          tabla: toSend.tabla,
+          columna: toSend.columna,
+          campo: result.value,
+          code: toSend.code,
+        },
+        type: "POST",
+      }).done((data) => {
+        AlertaExito();
+        const selectedProject = $("#ProjectSelectorCostos")
+          .children("option:selected")
+          .val();
+        $.ajax({
+          url: "php/materiales/ObtenerTabla.php",
+          data: { cliente: selectedProject },
+        }).done((data) => {
+          $(".materialesDiv").css("display", "flex");
+          $("#btnAddMaterial").removeClass("invisible").addClass("visible");
+          $("#tablaMateriales").html(data);
+          $("#dataTable").DataTable();
+        });
+      });
+    }
+  });
+});
+
+const alertabillrepeat = () => {
+  Swal.fire(
+    "Bill number problem",
+    "This bill number already exist with this provider",
+    "error"
+  );
 };

@@ -20,18 +20,21 @@ if (isset($_SESSION['user'])) {
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet" />
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
 </head>
 
 <style>
 .materialesDiv {
     display: none;
 }
+
 hr.new2 {
-  border-top: 1px dashed black;
+    border-top: 1px dashed black;
 }
 </style>
 
@@ -242,8 +245,8 @@ hr.new2 {
                         <h6 class="m-0 font-weight-bold text-primary">Enter Scopes</h6>
                     </div>
                     <div class="card-body">
-                        <form id="rowsC" >
-                            
+                        <form id="rowsC">
+
                     </div>
                     <div class="card-footer">
 
@@ -256,12 +259,26 @@ hr.new2 {
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            Enter Scopes</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Enter Scopes</h6>
                     </div>
                     <div class="card-body">
-                        <h5>Select project to continue</h5>
+                        <h5 id="mensaje" >Select project to continue</h5>
                         <div id="tablaMateriales" class="container-fluid">
+
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="dowPart" style="display:none">
+                            <hr>
+                            <button class="btn btn-success" onclick="generateReport()">Generate Quotes</button>
+                            <button class="btn btn-info" onclick="generateReportF()">Generate Invoice</button>
                         </div>
                     </div>
                 </div>
@@ -323,23 +340,27 @@ hr.new2 {
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+ 
     <!-- Page level custom scripts -->
     <!-- <script src="js/jquery.mask.js"></script> -->
-    <script src="js/demo/datatables-demo.js"></script>
+ 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
     <script src="js/jquery.mask.js"></script>
     <script src="js/cotizaciones.js"></script>
-
-
+<style>
+    td.details-control {
+	background: url('https://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+	cursor: pointer;
+}
+</style>
     <script>
     $(document).ready(function() {
-        fillSelectProyectos()
+        fillSelectProyectos();
     })
     </script>
 </body>

@@ -4,9 +4,31 @@ const crearMascara = () => {
     reverse: true,
   });
 };
+
+const brProyectoToLocalS = async () => {
+  let data = await $.ajax("empleados/php/ObtenerProyecto.php");
+  localStorage.setItem("proyectos", data);
+  fillSelectProyectos("r");
+};
+
+const loader = () => {
+  Swal.fire({
+    title: "Please Wait!",
+    html: "Loading data",
+    allowOutsideClick: false,
+    onBeforeOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
+
+const AlertaExito = () => {
+  Swal.fire("Good job!", "Data Inserted", "success");
+};
 let contador = 1;
 // Cotizaciones===================================================
 
+// DIVISON PARA INGRESO DE DATOOOOS===============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
 //IMPRIMIR NUEVA CATEGORIA
 const imprimirCategoria = () => {
   contador++;
@@ -70,13 +92,13 @@ const imprimirCategoria = () => {
 
 const imprimirFila = (contadorActual) => {
   let row = `
-<div class="form-row ">
+<div class="form-row zone">
     <div class="col-md-11"> <label for="place"> Work Zone</label> <input type="text" REQUIRED id="place" name="place" class="form-control">
     </div>
     <div class="col-md-1 "><label for="place">Add Category</label>  <a class="btn btn-success text-white " onclick="imprimirCategoria()" ><i class="fas fa-folder-plus"></i></a>
     </div>
 </div>
-<div id="categorias">
+<div id="categorias" class='zone'>
 <div class="card">
     <div class="card-body works${contadorActual}">
         <div class="row justify-content-start">
@@ -167,6 +189,85 @@ const deleteWork = (turnoW, turno) => {
   $("#btnAddrWork" + turno).data("turnow", v - 1);
 };
 
+// DIVISON PARA INGRESO DE DATOOOOS================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================ DIVISION PARA MOSTRAR DATOS===============================
+
+// FORMATEAR DATOS PARA TABLA
+const format = async (d) => {
+  let data = await $.ajax(
+    "php/cotizaciones/ObtenerDatosC.php?cliente=" + d.code
+  );
+  data = JSON.parse(data);
+  let before;
+  let html = `<table class="table table-stripeed table-bordered" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">`;
+  data.map((element) => {
+    if (element.cat !== before) {
+      html += `
+        <tr>
+        <th>${element.cat} </th>
+        <th>$ ${element.total} </th>
+        </tr> 
+        <tr> <td> ${element.detalle}</td>      <td></td></tr>
+        `;
+    } else {
+      html += `
+        <tr>
+        <td>${element.detalle} </td>
+        <td></td>
+        </tr>  `;
+    }
+    // html += ` <tr>
+    // <td>${element.cat} </td>
+    // <td>${element.total} </td>
+    // <td>${element.detalle} </td>
+    // </tr>  `;
+    before = element.cat;
+  });
+  html += `</table>`;
+  return html;
+};
+// TABLA
+var table;
+const tabla = (id) => {
+  table = $("#example").DataTable({
+    destroy: true,
+    ajax: {
+      url: `php/cotizaciones/ObtenerCotizaciones.php?cliente=${id}`,
+      dataSrc: "",
+    },
+    columns: [
+      {
+        className: "details-control",
+        orderable: false,
+        data: null,
+        defaultContent: "",
+      },
+      { data: "WorkZone", name: "WorkZone" },
+      { data: "total", name: "Total" },
+    ],
+    order: [[1, "asc"]],
+  });
+};
+
+// Add event listener for opening and closing details
+$("#example").on("click", "td.details-control", function () {
+  var tr = $(this).closest("tr");
+  var row = table.row(tr);
+
+  if (row.child.isShown()) {
+    // This row is already open - close it
+    row.child.hide();
+    tr.removeClass("shown");
+  } else {
+    // Open this row
+    format(row.data()).then((data) => {
+      row.child(data).show();
+      tr.addClass("shown");
+    });
+  }
+});
+
+//============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================ DIVISION PARA MOSTRAR DATOS===============================
+
 $("#rowsC")
   .on("click", ".btnAddrWork", function () {
     data = $(this).data();
@@ -175,6 +276,7 @@ $("#rowsC")
   //   // Insertar============ / Cotizaciones
   .submit(async function (event) {
     event.preventDefault();
+    loader();
     const ProjectSelectorCtciones = $("#ProjectSelectorCtciones")
       .children("option:selected")
       .val();
@@ -194,10 +296,18 @@ $("#rowsC")
     const query = await $.ajax({
       url: `php/cotizaciones/insert.php?arreglo=${JSON.stringify(
         worksPerTurno
-      )}&contador=${contador}&proyectoId=${ProjectSelectorCtciones}`,
+      )}&contador=${contador}&proyectoId=${ProjectSelectorCtciones}&NewP=${NewP}&NewCliente=${NewCliente}`,
       type: "POST",
       data: serializedData,
     });
+    brProyectoToLocalS();
+
+    swal.close();
+    AlertaExito();
+    tabla(ProjectSelectorCtciones);
+    $(".zone").remove();
+    contador = 1;
+    imprimirFila(contador);
     console.log(query);
   });
 
@@ -271,18 +381,14 @@ $("#ProjectSelectorCtciones").change(() => {
     $("#newCliente").removeClass("visible").addClass("invisible");
     $("#newKind").removeClass("visible").addClass("invisible");
   }
-  // $.ajax({
-  //   url: "php/cotizaciones/ObtenerCotizaciones.php",
-  //   data: { cliente: selectedProject },
-  // }).done((data) => {
   $(".materialesDiv").css("display", "flex");
   $("#btnAddMaterial").removeClass("invisible").addClass("visible");
   crearMascara();
+  $("#mensaje").addClass("invisible");
+  $(".dowPart").css("display", "block");
 
-  // $("#tablaMateriales").html(data);
-  // $("#dataTable").DataTable();
+  tabla(selectedProject);
 });
-// });
 //=========================================================================================================================
 
 //SELECT DE CLIENTES
@@ -304,7 +410,16 @@ $("#KindPro").change(() => {
   const NombreNuevoProyecto = $("#generico").val(valor + mesActual);
 });
 
-const fillSelectProyectos = () => {
+const fillSelectProyectos = (op) => {
+  if (op === "r") {
+    $("#ProjectSelectorCtciones").find("option").remove();
+    $("#ProjectSelectorCtciones").append(
+      `<option disabled selected></option><option value="0">* New Project *</option>`
+    );
+    $("#newInput").removeClass("visible").addClass("invisible");
+    $("#newCliente").removeClass("visible").addClass("invisible");
+    $("#newKind").removeClass("visible").addClass("invisible");
+  }
   let data = localStorage.getItem("proyectos");
   data = JSON.parse(data);
   for (const prop in data) {
@@ -346,4 +461,24 @@ const deleteThisCtz = (id, cliente) => {
       );
     }
   });
+};
+//Boton para generar reporte cotizacion
+const generateReport = () => {
+  const selectedProject = $("#ProjectSelectorCtciones")
+    .children("option:selected")
+    .val();
+  let url = `php/reportes/linkCotizacion.php?projectCode=${selectedProject}`;
+  let win = window.open(url, "_blank");
+  // Cambiar el foco al nuevo tab (punto opcional)
+  win.focus();
+};
+//Boton para generar Invoice
+const generateReportF = () => {
+  const selectedProject = $("#ProjectSelectorCtciones")
+    .children("option:selected")
+    .val();
+  let url = `php/reportes/linkFactura.php?projectCode=${selectedProject}`;
+  let win = window.open(url, "_blank");
+  // Cambiar el foco al nuevo tab (punto opcional)
+  win.focus();
 };

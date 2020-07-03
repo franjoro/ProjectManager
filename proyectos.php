@@ -227,17 +227,21 @@ include("./php/conexion.php")
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
                                                 <label for="inputEmail4">Suite Number</label>
                                                 <input type="text" class="form-control" name="suite">
                                             </div>
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
                                                 <label for="inputPassword4">Start Date</label>
                                                 <input type="text" class="form-control" name="start" id="start">
                                             </div>
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
                                                 <label for="inputPassword4">End Date</label>
                                                 <input type="text" class="form-control" name="end" id="end">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="inputPassword4">Invoice Code</label>
+                                                <input type="text" class="form-control" name="invoice" id="invoice">
                                             </div>
                                         </div>
                                         <div class="form-group">
