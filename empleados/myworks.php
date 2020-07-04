@@ -58,7 +58,7 @@ if(isset($_SESSION['user'])){
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js">
     </script>
-    <script src="js/empleados.js"></script>
+    <!-- <script src="js/empleados.js"></script> -->
 
 
 
