@@ -210,20 +210,24 @@ include("./php/conexion.php")
                                             <input type="text" required class="form-control" id="name" name="name">
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Client</label>
                                                 <select class="form-control" id="client" name="client">
                                                     <option disabled selected>Select Client</option>
                                                     <option disabled>Loading...</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Property</label>
                                                 <select class="form-control" disabled id="ProyectoSelectPropiedades"
                                                     name="ProyectoSelectPropiedades">
                                                     <option disabled selected>Seleccionar cliente</option>
                                                     <option disabled>Loading...</option>
                                                 </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputEmail4">PO</label>
+                                                <input type="text" class="form-control" name="po">
                                             </div>
                                         </div>
                                         <div class="form-row">

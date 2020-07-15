@@ -83,8 +83,7 @@ const WorkToRegiOut = (id, actual) => {
                                             </button>
                                         </div>
                                     </td>
-                                </tr>
-                             `;
+                                </tr> `;
   return $("#turno").append(htmlLayaout);
 };
 // TRABAJO COMPLETADO
@@ -93,7 +92,7 @@ const WorkDone = (id, actual) => {
   let htmlLayaout = `           <tr>
                                     <td>${id}</td>
                                     <td colspan="2">
-                                        <h5>Work Done Today</h5>
+                                        <h5 class="text-success"> <i class="fas fa-clipboard-check"></i> Work Done Today</h5>
                                         <p>Project: ${actual.name}</p>
                                         <p>Entry Hour: ${actual.startime}</p>
                                         <p>Exit Hour: ${actual.endtime}</p>
@@ -129,10 +128,18 @@ const NumeroDeTrabajoToday = () => {
     data = JSON.parse(data);
     //variables
     const numRows = data.num;
+    let sumaTHoras = 0,
+      restadelunchcode,
+      tiempoDeLunchCode;
     if (numRows === 0) NewWork();
-
     if (numRows > 0) {
       data.data.forEach((actual, id) => {
+        let hor = actual.totalhoras.split(":");
+        if (hor[0] >= 1) {
+          restadelunchcode = actual.code;
+          tiempoDeLunchCode = actual.totalhoras;
+        }
+        sumaTHoras = Number(sumaTHoras) + Number(hor[0] * 60) + Number(hor[1]);
         numeroTotal = id + 1;
         if (actual.status == 0) WorkToRegiOut(id + 1, actual);
         if (actual.status == 1) {
@@ -142,8 +149,56 @@ const NumeroDeTrabajoToday = () => {
         }
       });
     }
-    PutTimePicker();
 
+    if (sumaTHoras >= 300) {
+      let local = localStorage.getItem("almuerzo");
+      if (local === getTodayDate()) {
+        $("#botones").append(
+          `<button class="btn btn-success"> <i class="fas fa-clipboard-check"></i> Lunch entered</button>`
+        );
+      } else {
+        $("#botones").append(
+          `<button class="btn btn-info" onclick="newAlmuerzo('${restadelunchcode}', '${tiempoDeLunchCode}')">Add lunch time</button>`
+        );
+      }
+    }
+    PutTimePicker();
+  });
+};
+
+//Resta de almuerzo
+
+const newAlmuerzo = (id, tiempo) => {
+  Swal.fire({
+    title: "How old are you?",
+    icon: "question",
+    input: "range",
+    inputAttributes: {
+      min: 25,
+      max: 60,
+      step: 1,
+    },
+    inputValue: 25,
+    preConfirm: async (value) => {
+      tiempo = tiempo.split(":");
+      let minutos = Number(tiempo[0] * 60) + Number(tiempo[1]);
+      nuevotiempo = ((minutos - value) / 60).toFixed(2).split(".");
+      let minutoToH = Math.round(Number(nuevotiempo[1]) * 0.6);
+      let newH = `${nuevotiempo[0]}:${minutoToH}`;
+      console.log(newH);
+      let query = await $.ajax({
+        url: "../php/edit.php",
+        type: "POST",
+        data: {
+          tabla: "tb_labor",
+          columna: "totalhoras",
+          campo: newH,
+          code: id,
+        },
+      });
+      localStorage.setItem("almuerzo", getTodayDate());
+      location.reload();
+    },
   });
 };
 
@@ -160,7 +215,7 @@ $("#turno").on("focus", "#proyecto", function () {
   data = JSON.parse(data);
 
   for (const prop in data) {
-    $("#proyecto").append(`<option value="${prop}">${data[prop]}</option>`)
+    $("#proyecto").append(`<option value="${prop}">${data[prop]}</option>`);
   }
   banderaDown = true;
 });

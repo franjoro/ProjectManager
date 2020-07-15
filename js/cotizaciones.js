@@ -5,10 +5,10 @@ const crearMascara = () => {
   });
 };
 
-const brProyectoToLocalS = async () => {
+const brProyectoToLocalS = async (selected) => {
   let data = await $.ajax("empleados/php/ObtenerProyecto.php");
   localStorage.setItem("proyectos", data);
-  fillSelectProyectos("r");
+  fillSelectProyectos("r", selected);
 };
 
 const loader = () => {
@@ -276,39 +276,44 @@ $("#rowsC")
   //   // Insertar============ / Cotizaciones
   .submit(async function (event) {
     event.preventDefault();
-    loader();
     const ProjectSelectorCtciones = $("#ProjectSelectorCtciones")
       .children("option:selected")
       .val();
-    if (ProjectSelectorCtciones == "x")
+    console.log(ProjectSelectorCtciones);
+    if (validate.isEmpty(ProjectSelectorCtciones)) {
       return alert("Debe Seleccionar proyecto");
-    let worksPerTurno = [];
-    for (let i = 1; i <= contador; i++) {
-      worksPerTurno.push($("#btnAddrWork" + i).data().turnow);
-    }
-    $(".precioClase").each(function () {
-      var text = $(this).val().replace(",", "");
-      $(this).val(text.trim());
-    });
-    const NewP = $("#generico").val();
-    const NewCliente = $("#clienteSelectNew").children("option:selected").val();
-    const serializedData = $(this).serialize();
-    const query = await $.ajax({
-      url: `php/cotizaciones/insert.php?arreglo=${JSON.stringify(
-        worksPerTurno
-      )}&contador=${contador}&proyectoId=${ProjectSelectorCtciones}&NewP=${NewP}&NewCliente=${NewCliente}`,
-      type: "POST",
-      data: serializedData,
-    });
-    brProyectoToLocalS();
+    } else {
+      loader();
+      let worksPerTurno = [];
+      for (let i = 1; i <= contador; i++) {
+        worksPerTurno.push($("#btnAddrWork" + i).data().turnow);
+      }
+      $(".precioClase").each(function () {
+        var text = $(this).val().replace(",", "");
+        $(this).val(text.trim());
+      });
+      const NewP = $("#generico").val();
+      const NewCliente = $("#clienteSelectNew")
+        .children("option:selected")
+        .val();
+      const serializedData = $(this).serialize();
+      const query = await $.ajax({
+        url: `php/cotizaciones/insert.php?arreglo=${JSON.stringify(
+          worksPerTurno
+        )}&contador=${contador}&proyectoId=${ProjectSelectorCtciones}&NewP=${NewP}&NewCliente=${NewCliente}`,
+        type: "POST",
+        data: serializedData,
+      });
+      brProyectoToLocalS(ProjectSelectorCtciones);
 
-    swal.close();
-    AlertaExito();
-    tabla(ProjectSelectorCtciones);
-    $(".zone").remove();
-    contador = 1;
-    imprimirFila(contador);
-    console.log(query);
+      swal.close();
+      AlertaExito();
+      tabla(ProjectSelectorCtciones);
+      $(".zone").remove();
+      contador = 1;
+      imprimirFila(contador);
+      console.log(query);
+    }
   });
 
 //     $.ajax({
@@ -410,11 +415,15 @@ $("#KindPro").change(() => {
   const NombreNuevoProyecto = $("#generico").val(valor + mesActual);
 });
 
-const fillSelectProyectos = (op) => {
+const fillSelectProyectos = (op, selected) => {
   if (op === "r") {
     $("#ProjectSelectorCtciones").find("option").remove();
     $("#ProjectSelectorCtciones").append(
       `<option disabled selected></option><option value="0">* New Project *</option>`
+    );
+    $(`ProjectSelectorCtciones option[value=${selected}]`).attr(
+      "selected",
+      "selected"
     );
     $("#newInput").removeClass("visible").addClass("invisible");
     $("#newCliente").removeClass("visible").addClass("invisible");

@@ -51,25 +51,16 @@ $datos = mysqli_fetch_array($queryClient);
                 <div class="col-xs-5">
                     <h1>Estimate Contracts</h1>
                     <h4 class="text-muted">NO: <?php echo $datos[0] ?> | <?php echo date("d/m/Y") ?> </h4>
+                    <h3>GST 79921 7096 RT0001</h3>
                 </div>
             </div>
         </div>
         <div class="invoice-body shadow p-3 mb-5 bg-white rounded">
             <div class="row">
-                <div class="col-xs-5">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Project Generals</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h6 class="text-muted"> <?php echo $datos[1] ?> </h6>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-xs-7">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Customer Details</h3>
+                            <h3 class="panel-title">Bill to</h3>
                         </div>
                         <div class="panel-body">
                             <dl class="dl-horizontal">
@@ -86,6 +77,16 @@ $datos = mysqli_fetch_array($queryClient);
                         </div>
                     </div>
                 </div>
+                <div class="col-xs-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Project Details</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h6 class="text-muted"> <?php echo $datos[1] ?> </h6>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -95,8 +96,6 @@ $datos = mysqli_fetch_array($queryClient);
                     <thead>
                         <tr>
                             <th class="text-center"><b>DESCRIPTION</b></th>
-                            <th class="text-center colfix">Sum Cost</th>
-                            <th class="text-center colfix">Tax</th>
                             <th class="text-center colfix">Total</th>
                         </tr>
                     </thead>
@@ -127,31 +126,21 @@ $datos = mysqli_fetch_array($queryClient);
                         <tr>
                             <td>
                                 <b><ins><?php echo strtoupper($row[0]) ?>:</ins></b><br>
-                        <?php while($rows = mysqli_fetch_array($query)){ ?>
+                                <?php while($rows = mysqli_fetch_array($query)){ ?>
                                 <?php 
                                     if($rows[0] !== $categoria){
-                                        echo "<p><b>".$rows[0]."</b> $".$rows[1]."</p> <p>-".$rows[2]."</p>";
+                                        echo "<p><b>".$rows[0]."</b><span class='mono'> $".$rows[1]." </span>  </p> <p>-".$rows[2]."</p>";
                                     }else{
                                         echo "<p>-".$rows[2]."</p>";
                                     }
                                     ?>
-                                
-                        <?php 
+
+                                <?php 
                     $categoria = $rows[0];
                     } ?>
                             </td>
                             <td class="text-right">
-                                <span class="mono">$ <?php echo number_format($row[1],2)  ?>  </span>
-                                <br>
-                                <small class="text-muted"> Units</small>
-                            </td>
-                            <td class="text-right">
-                                <span class="mono">+ $<?php echo number_format($precioConImp,2)?></span>
-                                <br>
-                                <small class="text-muted">GST 5% </small>
-                            </td>
-                            <td class="text-right">
-                                <strong class="mono">$ <?php echo number_format($sumaPreciomasImpu,2)  ?> </strong>
+                                <span class="mono">$ <?php echo number_format($row[1],2)  ?> </span>
                                 <br>
                             </td>
                         </tr>
@@ -162,8 +151,6 @@ $datos = mysqli_fetch_array($queryClient);
                     </tbody>
                 </table>
             </div>
-
-
             <div class="panel panel-default">
                 <table class="table table-bordered table-condensed">
                     <thead>

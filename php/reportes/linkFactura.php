@@ -10,7 +10,7 @@ tb_proyectos.notes,
 tb_clientes.name,
 tb_clientes.address,
 tb_clientes.teloffice,
-tb_clientes.email, tb_proyectos.invoiceCode FROM tb_proyectos INNER JOIN tb_clientes ON tb_proyectos.cliente = tb_clientes.code WHERE tb_proyectos.code = '" . $id . "'";
+tb_clientes.email, tb_proyectos.invoiceCode, tb_proyectos.PO FROM tb_proyectos INNER JOIN tb_clientes ON tb_proyectos.cliente = tb_clientes.code WHERE tb_proyectos.code = '" . $id . "'";
 $queryClient = mysqli_query($mysqli, $sqlClient);
 
 
@@ -51,25 +51,17 @@ $datos = mysqli_fetch_array($queryClient);
                 <div class="col-xs-5">
                     <h1>Invoice</h1>
                     <h4 class="text-muted">NO: <?php echo $datos[6] ?> | <?php echo date("d/m/Y") ?> </h4>
+                    <h4>GST 79921 7096 RT0001</h4>
+                    <h4>PO #<?php echo $datos[7] ?> </h4>
                 </div>
             </div>
         </div>
         <div class="invoice-body shadow p-3 mb-5 bg-white rounded">
             <div class="row">
-                <div class="col-xs-5">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Project Generals</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h6 class="text-muted"> <?php echo $datos[1] ?> </h6>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-xs-7">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Customer Details</h3>
+                            <h3 class="panel-title">Bill to</h3>
                         </div>
                         <div class="panel-body">
                             <dl class="dl-horizontal">
@@ -86,6 +78,16 @@ $datos = mysqli_fetch_array($queryClient);
                         </div>
                     </div>
                 </div>
+                <div class="col-xs-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Project Details</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h6 class="text-muted"> <?php echo $datos[1] ?> </h6>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -95,8 +97,6 @@ $datos = mysqli_fetch_array($queryClient);
                     <thead>
                         <tr>
                             <th class="text-center"><b>DESCRIPTION</b></th>
-                            <th class="text-center colfix">Sum Cost</th>
-                            <th class="text-center colfix">Tax</th>
                             <th class="text-center colfix">Total</th>
                         </tr>
                     </thead>
@@ -126,7 +126,7 @@ $datos = mysqli_fetch_array($queryClient);
                         <tr>
                             <td>
                                 <b><ins><?php echo strtoupper($row[0]) ?>:</ins></b><br>
-                        <?php while ($rows = mysqli_fetch_array($query)) { ?>
+                                <?php while ($rows = mysqli_fetch_array($query)) { ?>
                                 <?php
                                     if ($rows[0] !== $categoria) {
                                         echo "<p><b>".$rows[0]."</b> $".$rows[1]."</p> <p>-".$rows[2]."</p>";
@@ -134,24 +134,15 @@ $datos = mysqli_fetch_array($queryClient);
                                         echo "<p>-".$rows[2]."</p>";
                                     }
                                     ?>
-                                
-                        <?php
+
+                                <?php
                     $categoria = $rows[0];
                     } ?>
                             </td>
                             <td class="text-right">
-                                <span class="mono">$ <?php echo number_format($row[1], 2)  ?>  </span>
+                                <span class="mono">$ <?php echo number_format($row[1], 2)  ?> </span>
                                 <br>
                                 <small class="text-muted"> Units</small>
-                            </td>
-                            <td class="text-right">
-                                <span class="mono">+ $<?php echo number_format($precioConImp, 2)?></span>
-                                <br>
-                                <small class="text-muted">GST 5% </small>
-                            </td>
-                            <td class="text-right">
-                                <strong class="mono">$ <?php echo number_format($sumaPreciomasImpu, 2)  ?> </strong>
-                                <br>
                             </td>
                         </tr>
                         <?php

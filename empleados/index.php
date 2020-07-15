@@ -14,6 +14,8 @@ $row = mysqli_fetch_array(mysqli_query($mysqli , "SELECT name FROM `tb_empleados
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css" />
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
@@ -53,9 +55,9 @@ $row = mysqli_fetch_array(mysqli_query($mysqli , "SELECT name FROM `tb_empleados
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <tfoot>
-                            <tr>
-                                <td colspan="3">
-                                    <button class="btn btn-success" id="newbtn">Add new work row</button>
+                            <tr >
+                                <td colspan="3" id="botones">
+                                    <button class="btn btn-success" id="newbtn">Add new project</button>
                                 </td>
                             </tr>
                         </tfoot>
