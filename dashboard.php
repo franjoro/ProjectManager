@@ -62,7 +62,8 @@ if (isset($_SESSION['user'])) {
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Project management</a>
                         <a class="collapse-item" href="materiales.php">Purchase management</a>
-                        <a class="collapse-item" href="reportes.php">Reports</a>
+                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
+                        <a class="collapse-item" href="reportesP.php">Projects/Provider Reports</a>
                     </div>
                 </div>
             </li>

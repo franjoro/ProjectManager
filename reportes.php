@@ -1,7 +1,6 @@
-<?php
-session_start();
-if(isset($_SESSION['user'])){ 
-include("./php/conexion.php")
+<?php session_start();
+if (isset($_SESSION['user'])) {
+    include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,18 +11,19 @@ include("./php/conexion.php")
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+
     <title>Project Manager</title>
+
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet" />
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-</head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
+</head>
 
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -183,121 +183,106 @@ include("./php/conexion.php")
                                 </a>
                             </div>
                         </li>
-
-
-
-
                     </ul>
                 </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Projects</h1>
                     <div class="row">
-                        <!-- Content Column -->
-                        <div class="col-lg-5 mb-4">
-                            <!-- Project Card Example -->
+                        <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Add new project </h6>
-                                </div>
-                                <div class="card-body">
-                                    <form id="ProyectosForm">
-                                        <div class="form-group">
-                                            <label for="inputAddress">Name Project*</label>
-                                            <input type="text" required class="form-control" id="name" name="name">
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Client</label>
-                                                <select class="form-control" id="client" name="client">
-                                                    <option disabled selected>Select Client</option>
-                                                    <option disabled>Loading...</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Property</label>
-                                                <select class="form-control" disabled id="ProyectoSelectPropiedades"
-                                                    name="ProyectoSelectPropiedades">
-                                                    <option disabled selected>Seleccionar cliente</option>
-                                                    <option disabled>Loading...</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="inputEmail4">PO</label>
-                                                <input type="text" class="form-control" name="po">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-3">
-                                                <label for="inputEmail4">Suite Number</label>
-                                                <input type="text" class="form-control" name="suite">
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="inputPassword4">Start Date</label>
-                                                <input type="text" class="form-control" name="start" id="start">
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="inputPassword4">End Date</label>
-                                                <input type="text" class="form-control" name="end" id="end">
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="inputPassword4">Invoice Code</label>
-                                                <input type="text" class="form-control" name="invoice" id="invoice">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputAddress2">Notes</label>
-                                            <textarea class="form-control" name="notes"></textarea>
-                                        </div>
-
-                                        <button id="New_button" type="submit"
-                                            class="btn btn-primary visible">Insert</button>
-                                    </form>
-                                    <button id="loader" class="btn btn-primary invisible" disabled>
-                                        <span class="spinner-border spinner-border-sm" id="loader" role="status"
-                                            aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-7 mb-4">
-                            <!-- Illustrations -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">
-                                        Projects table
+                                        Hours Worked
                                     </h6>
                                 </div>
+                                <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <div id="projectTable"></div>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-md-6 mb-4">
+                                            <label>Filter by</label> <br>
+                                            <button class="btn btn-success" id="filter1">Empleoyees</button>
+                                            <button class="btn btn-info" id="filter2">All Projects</button>
+                                        </div>
+                                        <div class="col-xl-6 col-md-6 mb-4" id="selectores">
+                                            <label>Filter by Date</label>
+                                            <div id="reportrange"
+                                                style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                                <i class="fa fa-calendar"></i>&nbsp;
+                                                <span></span> <i class="fa fa-caret-down"></i>
+                                            </div>
+                                            <div id="selector">
+                                                <hr>
+                                                <label>Select Project</label>
+                                                <select id="proj" class="form-control">
+                                                    <option value="All">All</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Approach -->
                         </div>
                     </div>
+
+                    <div class="row" id="div_1">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        By empleoyess table
+                                    </h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="responsive">
+                                        <table id="order_data" class="display responsive nowrap" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-none" id="div_2">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        By projects table
+                                    </h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="responsive">
+                                        <table id="order_data2" class="display responsive nowrap" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <!-- <span>Copyright &copy; Your Website 2019</span> -->
+                        <span>Copyright &copy; Your Website 2019</span>
                     </div>
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 
@@ -317,9 +302,13 @@ include("./php/conexion.php")
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">
+                    Select "Logout" below if you are ready to end your current session.
+                </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                        Cancel
+                    </button>
                     <a class="btn btn-primary" href="php/destroy.php">Logout</a>
                 </div>
             </div>
@@ -335,60 +324,28 @@ include("./php/conexion.php")
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <!-- <script src="js/jquery.mask.js"></script> -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <!-- <script src="js/request_handler.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-    <script src="js/request_handler.js"></script>
-
-    <script>
-    $(document).ready(function() {
-        tablaProyecto();
-
-
-        var from = $("#start")
-            .datepicker({
-                dateFormat: "dd/mm/yy",
-                minDate: 0,
-                changeMonth: true
-            })
-            .on("change", function() {
-                to.datepicker("option", "minDate", getDate(this));
-            }),
-            to = $("#end").datepicker({
-                dateFormat: "dd/mm/yy",
-                changeMonth: true
-            })
-            .on("change", function() {
-                from.datepicker("option", "maxDate", getDate(this));
-            });
-
-        function getDate(element) {
-            var date;
-            var dateFormat = "dd/mm/yy";
-            try {
-                date = $.datepicker.parseDate(dateFormat, element.value);
-            } catch (error) {
-                date = null;
-            }
-
-            return date;
-        }
-
-    })
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js">
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js">
+    </script>
+    <script async type="text/javascript"
+        src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/b-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/datatables.min.js">
+    </script>
+    <script async src="js/REmpleados.js"></script>
 </body>
 
 </html>
-<?php 
-} else { 
+<?php
+} else {
     header("location:php/destroy.php");
 }
 ?>

@@ -19,7 +19,12 @@ $proyecto = $_GET['projectCode'];
 <body>
     <!-- As a link -->
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="../../materiales.php"><i class="fas fa-arrow-left"></i></a>
+        <?php if ($_GET['report'] == 'true') {
+    $back = "../../reportes.php";
+} else {
+    $back = "../../materiales.php";
+} ?>
+        <a class="navbar-brand" href="<?php echo $back ?>"><i class="fas fa-arrow-left"></i></a>
     </nav>
 
     <div class="container-fluid p-2">
@@ -44,31 +49,31 @@ $proyecto = $_GET['projectCode'];
                                 </thead>
                                 <tbody>
                                     <?php
-                        $sql = "SELECT tb_materiales.descripcion , tb_materiales.cantidad, tb_materiales.costo, tb_materiales.total, tb_providers.name , tb_bill.name, tb_bill.date, tb_bill.paym , tb_bill.GST , tb_bill.PST FROM tb_bill INNER JOIN tb_materiales ON tb_bill.code = tb_materiales.Bill INNER JOIN tb_providers ON tb_bill.providerCode = tb_providers.code WHERE tb_bill.projectCode='".$proyecto."' ";
-                        $query = mysqli_query($mysqli, $sql);
-                        $subtotal = 0;
-                        $totaltaxes = 0;
-                        $totalNeto = 0;
-                        while ($row = mysqli_fetch_array($query)) {
-                            $tr = str_replace(" ", ",", $row[2]);
-                            //impuestos
-                            $impuesto = 0;
-                            $gst ="";
-                            $pst ="";
-                            if ($row[8] == '1') {
-                                $impuesto = $impuesto +5;
-                                $gst="GST 5%";
-                            }
-                            if ($row[9]== '1') {
-                                $impuesto = $impuesto +7;
-                                $pst="PST 7%";
-                            }
-                            $ConImpuestos = $row[3]*$impuesto/100;
-                            $total = $row[3]+$ConImpuestos;
-                            //Totales
-                            $subtotal = $subtotal+$row[3];
-                            $totaltaxes = $totaltaxes + $ConImpuestos;
-                            $totalNeto = $totalNeto + $total; ?>
+                                    $sql = "SELECT tb_materiales.descripcion , tb_materiales.cantidad, tb_materiales.costo, tb_materiales.total, tb_providers.name , tb_bill.name, tb_bill.date, tb_bill.paym , tb_bill.GST , tb_bill.PST FROM tb_bill INNER JOIN tb_materiales ON tb_bill.code = tb_materiales.Bill INNER JOIN tb_providers ON tb_bill.providerCode = tb_providers.code WHERE tb_bill.projectCode='" . $proyecto . "' ";
+                                    $query = mysqli_query($mysqli, $sql);
+                                    $subtotal = 0;
+                                    $totaltaxes = 0;
+                                    $totalNeto = 0;
+                                    while ($row = mysqli_fetch_array($query)) {
+                                        $tr = str_replace(" ", ",", $row[2]);
+                                        //impuestos
+                                        $impuesto = 0;
+                                        $gst = "";
+                                        $pst = "";
+                                        if ($row[8] == '1') {
+                                            $impuesto = $impuesto + 5;
+                                            $gst = "GST 5%";
+                                        }
+                                        if ($row[9] == '1') {
+                                            $impuesto = $impuesto + 7;
+                                            $pst = "PST 7%";
+                                        }
+                                        $ConImpuestos = $row[3] * $impuesto / 100;
+                                        $total = $row[3] + $ConImpuestos;
+                                        //Totales
+                                        $subtotal = $subtotal + $row[3];
+                                        $totaltaxes = $totaltaxes + $ConImpuestos;
+                                        $totalNeto = $totalNeto + $total; ?>
                                     <tr>
 
                                         <td>
@@ -96,9 +101,9 @@ $proyecto = $_GET['projectCode'];
                                         <td class="text-right">
                                             <strong class="mono">$<?php echo number_format($ConImpuestos, 2) ?></strong>
                                             <br />
-                                            <small class="text-muted"><?php echo $pst?> </small>
+                                            <small class="text-muted"><?php echo $pst ?> </small>
                                             <br />
-                                            <small class="text-muted"><?php echo $gst?> </small>
+                                            <small class="text-muted"><?php echo $gst ?> </small>
                                         </td>
                                         <td class="text-right">
                                             <strong class="mono">$<?php echo number_format(($total), 2) ?></strong>
@@ -107,8 +112,8 @@ $proyecto = $_GET['projectCode'];
                                     </tr>
 
                                     <?php
-                        }
-                        ?>
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -158,24 +163,30 @@ $proyecto = $_GET['projectCode'];
                                 <tbody>
                                     <?php
 
-                        $sql = "SELECT tb_empleados.name, tb_empleados.term, tb_empleados.rate, tb_labor.dateDay, tb_labor.startime, tb_labor.endtime, tb_labor.totalhoras FROM `tb_labor` INNER JOIN tb_empleados ON tb_labor.codeEmpleado = tb_empleados.code WHERE tb_labor.codeProyecto = '".$proyecto."' ORDER BY tb_empleados.name ";
+                                    $sql = "SELECT tb_empleados.name, tb_empleados.term, tb_empleados.rate, tb_labor.dateDay, ( (HOUR(STR_TO_DATE(tb_labor.endtime,'%H:%i'))*60+MINUTE(STR_TO_DATE(endtime,'%H:%i'))) - (HOUR(STR_TO_DATE(tb_labor.startime,'%H:%i'))*60+MINUTE(STR_TO_DATE(tb_labor.startime,'%H:%i')))  )   FROM `tb_labor` INNER JOIN tb_empleados ON tb_labor.codeEmpleado = tb_empleados.code WHERE tb_labor.codeProyecto = '" . $proyecto . "' ORDER BY tb_labor.dateDay ";
 
-                        $query= mysqli_query($mysqli, $sql);
-                        $pagosTotales = 0;
-                        
-                        while ($row = mysqli_fetch_array($query)) {
-                            $pay = "";
-                            if ($row[1] == 1) {
-                                $resultPay = "Monthly salary";
-                                $pay = 0;
-                            } else {
-                                $horasTotales = $row[6];
-                                $horasTPunto = $array = explode(":", $horasTotales);
-                                $procentajeDeHora =  number_format(((100*$array[1])/60)/100, 2);
-                                $pay  = number_format(($array[0] * $row[2])+($procentajeDeHora *$row[2]), 2);
-                                $resultPay = $pay;
-                            }
-                            $pagosTotales = $pagosTotales +$pay; ?>
+                                    $query = mysqli_query($mysqli, $sql);
+                                    $pagosTotales = 0;
+
+                                    while ($row = mysqli_fetch_array($query)) {
+                                        $h = floor($row[4] / 60);
+                                        $m = fmod($row[4], 60);
+                                        if ($m < 10) {
+                                            $workDone =$h.":0".$m;
+                                        } else {
+                                            $workDone =$h.":".$m;
+                                        }
+                                        $pay = "";
+                                        if ($row[1] == 1) {
+                                            $resultPay = "Monthly salary";
+                                            $pay = 0;
+                                        } else {
+                                            $horasTotales = $row[4];
+                                            $procentajeDeHora =  number_format(((100 * $m) / 60) / 100, 2);
+                                            $pay  = number_format(($h * $row[2]) + ($procentajeDeHora * $row[2]), 2);
+                                            $resultPay = $pay;
+                                        }
+                                        $pagosTotales = $pagosTotales + $pay; ?>
                                     <tr>
                                         <td>
                                             <?php echo $row[0] ?>
@@ -187,7 +198,7 @@ $proyecto = $_GET['projectCode'];
                                             <!-- <small class="text-muted">Before Tax</small> -->
                                         </td>
                                         <td class="text-right">
-                                            <span class="mono"><?php echo $row[6] ?></span>
+                                            <span class="mono"><?php echo $workDone ?></span>
                                             <br />
                                         </td>
                                         <td class="text-right">
@@ -199,8 +210,8 @@ $proyecto = $_GET['projectCode'];
                                     </tr>
 
                                     <?php
-                        }
-                        ?>
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -216,11 +227,13 @@ $proyecto = $_GET['projectCode'];
                                 <tbody>
                                     <tr>
                                         <!-- <th class="text-center rowtotal mono">
-                                            <?php // echo $horastotales?>
+                                            <?php // echo $horastotales
+                                            ?>
                                         </th>
                                         <th class="text-center rowtotal mono">
                                             $
-                                            <?php //echo number_format($timpuesto, 2)?>
+                                            <?php //echo number_format($timpuesto, 2)
+                                            ?>
                                         </th> -->
                                         <th class="text-center rowtotal mono">
                                             $
@@ -234,22 +247,22 @@ $proyecto = $_GET['projectCode'];
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                          <table class="table table-bordered table-condensed">
-                                <thead>
-                                    <tr>
-                                        <!-- <td class="text-center col-xs-1">Total Hours Worked</td> -->
-                                        <td class="text-center col-xs-1">Total Cost</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th class="text-center rowtotal mono">
-                                            $
-                                            <?php echo number_format($totalNeto +$pagosTotales , 2) ?>
-                                        </th>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <!-- <td class="text-center col-xs-1">Total Hours Worked</td> -->
+                                    <td class="text-center col-xs-1">Total Cost</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th class="text-center rowtotal mono">
+                                        $
+                                        <?php echo number_format($totalNeto + $pagosTotales, 2) ?>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

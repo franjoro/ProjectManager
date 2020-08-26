@@ -162,8 +162,8 @@ const imprimirTrabajo = (data) => {
                </div>
                <div class="col-sm-1">
                      <a class="btn btn-danger btn-sm text-white" onclick="deleteWork(${
-                       data.turnow + 1
-                     },${data.turno})" >Remove Work</a>
+    data.turnow + 1
+    },${data.turno})" >Remove Work</a>
              </div>
              </div>
   </div>
@@ -193,9 +193,7 @@ const deleteWork = (turnoW, turno) => {
 
 // FORMATEAR DATOS PARA TABLA
 const format = async (d) => {
-  let data = await $.ajax(
-    "php/cotizaciones/ObtenerDatosC.php?cliente=" + d.code
-  );
+  let data = await $.ajax("php/cotizaciones/ObtenerDatosC.php?cliente=" + d.code);
   data = JSON.parse(data);
   let before;
   let html = `<table class="table table-stripeed table-bordered" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">`;
