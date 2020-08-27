@@ -410,7 +410,7 @@ if (isset($_SESSION['user'])) {
                 $("#date").datepicker();
                 PutTimePicker();
                 $.ajax({
-                    url: "empleados/php/ObtenerProyecto.php",
+                    url: "empleados/php/ObtenerProyecto2.php",
                 }).done((data) => {
                     banderaDown = true;
                     $("#proyecto").html(data);
