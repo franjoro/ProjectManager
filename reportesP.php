@@ -12,7 +12,7 @@ if (isset($_SESSION['user'])) {
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Project Manager</title>
+    <title>Purchase Reports</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
@@ -62,7 +62,6 @@ if (isset($_SESSION['user'])) {
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Project management</a>
                         <a class="collapse-item" href="materiales.php">Purchase management</a>
-                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                         <a class="collapse-item" href="reportesP.php">Projects/Provider Reports</a>
                     </div>
                 </div>
@@ -114,6 +113,7 @@ if (isset($_SESSION['user'])) {
                         <h6 class="collapse-header">Administrar</h6>
                         <a class="collapse-item " href="empleados.php">Employees</a>
                         <a class="collapse-item" href="labor.php">Work time</a>
+                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                     </div>
                 </div>
             </li>
@@ -232,12 +232,12 @@ if (isset($_SESSION['user'])) {
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">
-                                        By empleoyess table
+                                        By employees table
                                     </h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="responsive">
+                                    <div class="table-responsive">
                                         <table id="order_data" class="display responsive nowrap" style="width:100%">
                                         </table>
                                     </div>
@@ -258,7 +258,7 @@ if (isset($_SESSION['user'])) {
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="responsive">
+                                    <div class="table-responsive">
                                         <table id="order_data2" class="display responsive nowrap" style="width:100%">
                                         </table>
                                     </div>

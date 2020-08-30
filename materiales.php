@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(isset($_SESSION['user'])){ 
-include("./php/conexion.php")
+if (isset($_SESSION['user'])) {
+    include("./php/conexion.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,11 +26,7 @@ include("./php/conexion.php")
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
 </head>
 
-<style>
-.materialesDiv {
-    display: none;
-}
-</style>
+
 
 
 <body id="page-top">
@@ -70,7 +66,6 @@ include("./php/conexion.php")
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Project management</a>
                         <a class="collapse-item" href="materiales.php">Purchase management</a>
-                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                         <a class="collapse-item" href="reportesP.php">Projects/Provider Reports</a>
                     </div>
                 </div>
@@ -122,6 +117,7 @@ include("./php/conexion.php")
                         <h6 class="collapse-header">Administrar</h6>
                         <a class="collapse-item " href="empleados.php">Employees</a>
                         <a class="collapse-item" href="labor.php">Work time</a>
+                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                     </div>
                 </div>
             </li>
@@ -205,118 +201,103 @@ include("./php/conexion.php")
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">
                         Record of costs per project</h1>
-                    <form id="CotizacionesForm">
-                        <div class="form-row">
-                            <div class="form-group col-md-2">
-                                <label for="inputEmail4">Choose project</label>
-                                <select class="form-control" name="ProjectSelectorCostos" id="ProjectSelectorCostos">
-                                    <option disabled selected></option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2 invisible " id="newInput">
-                                <label>Nombre de proyecto</label>
-                                <input type="text" class="form-control" id="generico" name="generico">
-                            </div>
-                            <div class="form-group col-md-8 ">
-                            </div>
-                    </form>
-                </div>
-                <div class="card shadow mb-4 materialesDiv">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Add cost/activities</h6>
-                    </div>
-                    <div class="card-body">
-                        <form id="rows">
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="inputEmail4">Proovedor</label>
-                                    <select name="provider" id="proovedores" required
-                                        class="form-control form-control-sm proovedores">
-                                        <option disabled selected>Seleccionar proovedor</option>
-                                        <option disabled>Loading...</option>
-                                    </select>
 
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Bill number</label>
-                                    <input type="text" required class="form-control form-control-sm" name="bill">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Fecha</label>
-                                    <input type="text" required class="form-control form-control-sm" name="date"
-                                        id="date">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Forma de pago</label>
-                                    <select name="paym" class="form-control form-control-sm">
-                                        <option selected disabled>Elegir metodo de pago</option>
-                                        <option value="te">TE</option>
-                                        <option value="cr">CR</option>
-                                        <option value="ot">OT</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input type="checkbox" id="gst" name="gst" checked value="1"
-                                        class="custom-control-input">
-                                    <label class="custom-control-label" for="gst">GST 5%</label>
-                                </div>
-                                <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input type="checkbox" id="pst" name="pst" checked value="1"
-                                        class="custom-control-input">
-                                    <label class="custom-control-label" for="pst">PST 7%</label>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="card-footer">
+                    <div class="form-row">
 
-                        <button class="btn btn-success float-right" type="submit">Insertar</button>
 
-                        </form>
-                        <button class="btn btn-success float-left" id="addRowBtn">Agregar nueva fila</i></button>
+
                     </div>
-                </div>
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            Fields to be included in the report</h6>
+                    <div class="card shadow mb-4 materialesDiv">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Add cost / activities</h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="rows">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="ProjectSelectorCostos">Choose project</label>
+                                        <select name="ProjectSelectorCostos" id="ProjectSelectorCostos" required
+                                            class="form-control form-control-sm">
+                                            <option disabled selected></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputEmail4">Proovedor</label>
+                                        <select name="provider" id="proovedores" required                                         class="form-control form-control-sm proovedores">
+                                            <option disabled>Loading...</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Bill number</label>
+                                        <input type="text" required class="form-control form-control-sm" name="bill">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Fecha</label>
+                                        <input type="text" required class="form-control form-control-sm" name="date"
+                                            id="date">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Forma de pago</label>
+                                        <select name="paym" id="paym" class="form-control form-control-sm">
+                                            <option selected disabled>Elegir metodo de pago</option>
+                                            <option value="te">TE</option>
+                                            <option value="cr">CR</option>
+                                            <option value="ot">OT</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" id="gst" name="gst" checked value="1"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="gst">GST 5%</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" id="pst" name="pst" checked value="1"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="pst">PST 7%</label>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="card-footer">
+
+                            <button class="btn btn-success float-right" type="submit">Insertar</button>
+
+                            </form>
+                            <button class="btn btn-success float-left" id="addRowBtn">Agregar nueva fila</i></button>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <div id="tablaMateriales">
-                                <h5>Seleecionar proyecto para continuar</h5>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Fields to be included in the report</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div id="tablaMateriales">
+                                    <h5>Select project to continue</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
+                <!-- /.container-fluid -->
             </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <!-- <span>Copyright &copy; Your Website 2019</span> -->
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <!-- <span>Copyright &copy; Your Website 2019</span> -->
+                    </div>
                 </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
+            </footer>
+            <!-- End of Footer -->
 
-    </div>
-    <!-- End of Content Wrapper -->
+        </div>
+        <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -364,12 +345,11 @@ include("./php/conexion.php")
 
     <!-- Page level custom scripts -->
     <!-- <script src="js/jquery.mask.js"></script> -->
-    <script src="js/demo/datatables-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-    <script src="js/request_handler.js"></script>
+    <script src="js/materiales.js"></script>
     <script src="js/jquery.mask.js"></script>
 
 
@@ -394,8 +374,8 @@ include("./php/conexion.php")
 
 
 </html>
-<?php 
-} else { 
+<?php
+} else {
     header("location:php/destroy.php");
 }
 ?>

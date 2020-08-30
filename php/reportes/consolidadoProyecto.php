@@ -49,33 +49,60 @@ $proyecto = $_GET['projectCode'];
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT tb_materiales.descripcion , tb_materiales.cantidad, tb_materiales.costo, tb_materiales.total, tb_providers.name , tb_bill.name, tb_bill.date, tb_bill.paym , tb_bill.GST , tb_bill.PST FROM tb_bill INNER JOIN tb_materiales ON tb_bill.code = tb_materiales.Bill INNER JOIN tb_providers ON tb_bill.providerCode = tb_providers.code WHERE tb_bill.projectCode='" . $proyecto . "' ";
+                                    $sql = "SELECT tb_materiales.descripcion , tb_materiales.cantidad, tb_materiales.costo, tb_materiales.total, tb_providers.name , tb_bill.name, tb_bill.date, tb_bill.paym , tb_bill.GST , tb_bill.PST,tb_bill.code FROM tb_bill INNER JOIN tb_materiales ON tb_bill.code = tb_materiales.Bill INNER JOIN tb_providers ON tb_bill.providerCode = tb_providers.code WHERE tb_bill.projectCode='" . $proyecto . "' ";
                                     $query = mysqli_query($mysqli, $sql);
                                     $subtotal = 0;
                                     $totaltaxes = 0;
                                     $totalNeto = 0;
-                                    while ($row = mysqli_fetch_array($query)) {
-                                        $tr = str_replace(" ", ",", $row[2]);
-                                        //impuestos
-                                        $impuesto = 0;
-                                        $gst = "";
-                                        $pst = "";
-                                        if ($row[8] == '1') {
-                                            $impuesto = $impuesto + 5;
-                                            $gst = "GST 5%";
-                                        }
-                                        if ($row[9] == '1') {
-                                            $impuesto = $impuesto + 7;
-                                            $pst = "PST 7%";
-                                        }
-                                        $ConImpuestos = $row[3] * $impuesto / 100;
-                                        $total = $row[3] + $ConImpuestos;
-                                        //Totales
-                                        $subtotal = $subtotal + $row[3];
-                                        $totaltaxes = $totaltaxes + $ConImpuestos;
-                                        $totalNeto = $totalNeto + $total; ?>
-                                    <tr>
 
+
+                                    $totalBill = 0;
+                                    $bandera = false;
+                                    $ancla ;
+                                    while ($row = mysqli_fetch_array($query)) {
+                                        if($bandera == false){
+                                            $ancla = $row[10];
+                                            $bandera = true;
+                                        }
+                                        if ($ancla != $row[10]) {
+                                            echo '
+                                      <tr class="bg-light ">
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right"><strong
+                                                class="mono">$'.number_format($totalBill, 2) .'</strong>
+                                    </td>
+                                    </tr>
+                                    ';
+                                    $totalBill = 0;
+                                    }
+
+                                    $tr = str_replace(" ", ",", $row[2]);
+                                    //impuestos
+                                    $impuesto = 0;
+                                    $gst = "";
+                                    $pst = "";
+                                    if ($row[8] == '1') {
+                                    $impuesto = $impuesto + 5;
+                                    $gst = "GST 5%";
+                                    }
+                                    if ($row[9] == '1') {
+                                    $impuesto = $impuesto + 7;
+                                    $pst = "PST 7%";
+                                    }
+                                    $ConImpuestos = $row[3] * $impuesto / 100;
+                                    $total = $row[3] + $ConImpuestos;
+                                    $totalBill = $totalBill + $total;
+
+                                    //Totales
+                                    $subtotal = $subtotal + $row[3];
+                                    $totaltaxes = $totaltaxes + $ConImpuestos;
+                                    $totalNeto = $totalNeto + $total; ?>
+
+                                    <tr>
                                         <td>
                                             <?php echo $row[5] ?>
                                             <br />
@@ -96,7 +123,6 @@ $proyecto = $_GET['projectCode'];
                                         </td>
                                         <td class="text-right">
                                             <span class="mono"> $<?php echo number_format($row[3], 2) ?></span>
-
                                         </td>
                                         <td class="text-right">
                                             <strong class="mono">$<?php echo number_format($ConImpuestos, 2) ?></strong>
@@ -112,8 +138,20 @@ $proyecto = $_GET['projectCode'];
                                     </tr>
 
                                     <?php
+                                        $ancla = $row[10]; ?>
+                                    <?php
                                     }
                                     ?>
+                                    <tr class="bg-light ">
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right">
+                                        <strong class="mono">$<?php echo number_format($totalBill, 2) ?></strong>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

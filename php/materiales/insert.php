@@ -7,7 +7,6 @@ $total = $_POST['total']; //arreglo
 $proyectoId = $_GET['proyectoId'];
 $proovedores = $_POST['provider']; //single
 $billNum = $_POST['bill']; //single
-$ProyectName = $_GET['generico']; //single
 $date = $_POST['date']; //single
 $paym = $_POST['paym']; //single
 
@@ -30,40 +29,11 @@ $validacion = mysqli_fetch_array($query);
 if ($validacion[0] >0) {
     echo "billAlreadyExist";
 } else {
-    $c = $_GET['contador'];
-
-
-    if ($proyectoId == 0) {
-        $sql = "INSERT INTO tb_proyectos(name,cliente,propiedad) VALUES('" . $ProyectName . "', '0','0' )  ";
-        $query = mysqli_query($mysqli, $sql);
-        $id = mysqli_insert_id($mysqli);
-
-        if (!$query) {
-            echo  mysqli_error($mysqli);
-        }
-
-        $sql = "INSERT INTO tb_bill(projectCode, providerCode , name, date, paym, GST, PST) VALUES('" . $id . "','" . $proovedores . "','" . $billNum . "','" . $date . "','" . $paym . "','" . $gst . "','" . $pst . "' )  ";
-        $consultaBill = mysqli_query($mysqli, $sql);
-        $bill = mysqli_insert_id($mysqli);
-
-        if (!$consultaBill) {
-            echo mysqli_error($mysqli);
-        }
-        for ($i = 0; $i < $c; $i++) {
-            $sql = "INSERT INTO tb_materiales(Bill,descripcion,cantidad,costo,total) VALUES('" . $bill . "' , '" . $concepto[$i] . "' , '" . $cantidad[$i] . "' , '" . $precio[$i] . "' , '" . $total[$i] . "') ";
-            $ConsultaFor1 = mysqli_query($mysqli, $sql);
-        }
-
-        if (!$ConsultaFor1) {
-            echo mysqli_error($mysqli);
-        }
-    } else {
+        $c = $_GET['contador'];
         $sql = "INSERT INTO tb_bill(projectCode, providerCode , name, date, paym, GST, PST) VALUES('" . $proyectoId . "','" . $proovedores . "','" . $billNum . "','" . $date . "','" . $paym . "','" . $gst . "','" . $pst . "' )  ";
         $ConsultaBill2 = mysqli_query($mysqli, $sql);
         $bill = mysqli_insert_id($mysqli);
-
-
-
+        
         if (!$ConsultaBill2) {
             echo mysqli_error($mysqli);
         }
@@ -75,6 +45,6 @@ if ($validacion[0] >0) {
         if (!$ConsultaFor2) {
             echo mysqli_error($mysqli);
         }
-    }
+    
 }
 

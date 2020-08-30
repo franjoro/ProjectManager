@@ -20,7 +20,7 @@ if (isset($_SESSION['user'])) {
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet" />
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css" />
 
@@ -65,7 +65,6 @@ if (isset($_SESSION['user'])) {
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Project management</a>
                         <a class="collapse-item" href="materiales.php">Purchase management</a>
-                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                         <a class="collapse-item" href="reportesP.php">Projects/Provider Reports</a>
                     </div>
                 </div>
@@ -117,6 +116,7 @@ if (isset($_SESSION['user'])) {
                         <h6 class="collapse-header">Administrar</h6>
                         <a class="collapse-item " href="empleados.php">Employees</a>
                         <a class="collapse-item" href="labor.php">Work time</a>
+                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                     </div>
                 </div>
             </li>
@@ -195,7 +195,7 @@ if (isset($_SESSION['user'])) {
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Working hours</h1>
                     <div class="row">
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-4 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">
@@ -209,7 +209,7 @@ if (isset($_SESSION['user'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-8 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">
@@ -217,6 +217,13 @@ if (isset($_SESSION['user'])) {
                                     </h6>
                                 </div>
                                 <div class="card-body">
+                                    <div id="reportrange"
+                                        style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%"
+                                        class="d-none">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
+                                        <hr>
+                                    </div>
                                     <div class="table-responsive">
                                         <div id="labortable">
                                             <p>Select employee to see hours worked
@@ -282,11 +289,10 @@ if (isset($_SESSION['user'])) {
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 
@@ -294,22 +300,74 @@ if (isset($_SESSION['user'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js">
+    </script>
+    <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js">
+    </script>
+    <script async type="text/javascript"
+        src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/b-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/datatables.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     <script>
+    const start = moment().subtract(29, 'days');
+    const end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf(
+                'month')]
+        }
+    }, cb);
+
+
+    cb(start, end);
+
+
     const getTableEm = () => {
         $.ajax({
-            url: "php/empleados/tablatolabor.php"
+            url: `php/empleados/tablatolabor.php?entrada=${start.format('MM/DD/YYYY')}&salida=${end.format('MM/DD/YYYY')}`
         }).done(data => {
             $("#clientTable").html(data)
             $("#dataTable").DataTable();
         })
     }
+    let nameGlobal = "";
+    let idGlobal = "";
+    const showlaborAndS = (id, name, entrada, salida) => {
+        nameGlobal = name;
+        idGlobal = id;
+        showlabor(id, name, entrada, salida);
+    }
 
-    const showlabor = id => {
+    $("#reportrange").on("apply.daterangepicker", function(t, a) {
+        showlabor(idGlobal,nameGlobal,a.startDate.format('MM/DD/YYYY'), a.endDate.format('MM/DD/YYYY'))
+    });
+    const showlabor = (id, name, entrada, salida) => {
         $.ajax({
-            url: "php/empleados/labor.php?id=" + id
+            url: `php/empleados/labor.php?id=${id}&name=${name}&entrada=${entrada}&salida=${salida}`
         }).done(data => {
             $("#labortable").html(data)
-            $("#myTable").DataTable();
+            $("#reportrange").removeClass("d-none")
+            $("#myTable").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ]
+            });
         })
     }
 
@@ -464,7 +522,7 @@ if (isset($_SESSION['user'])) {
                         },
                     }).done((data) => {
                         Swal.fire("OK", "Work Done", "success");
-                        showlabor(id)
+                         showlabor(id,nameGlobal,start.format('MM/DD/YYYY'),end.format('MM/DD/YYYY'))
                     });
                 }
             );
@@ -492,7 +550,7 @@ if (isset($_SESSION['user'])) {
                 Promise.all([p1]).then(
                     Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
                         () => {
-                            showlabor(empleado)
+                            showlabor(empleado,nameGlobal,start.format('MM/DD/YYYY'),end.format('MM/DD/YYYY'))
                         }
                     )
                 );
@@ -507,7 +565,7 @@ if (isset($_SESSION['user'])) {
         });
     };
 
-    // ACTUALIZAR PROOVEDORES
+    // ACTUALIZAR 
     $("#labortable").on("click", "tbody td", async function() {
         const toSend = $(this).data();
         if (toSend.tabla === "delete") {
@@ -575,7 +633,7 @@ if (isset($_SESSION['user'])) {
                 .then(
                     (code) => {
                         Swal.fire("OK", "Work Done", "success");
-                        showlabor(data[3])
+                        showlabor(data[3],nameGlobal,start.format('MM/DD/YYYY'),end.format('MM/DD/YYYY'))
                     }
                 );
         }

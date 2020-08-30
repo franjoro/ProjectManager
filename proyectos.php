@@ -18,10 +18,11 @@ include("./php/conexion.php")
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet" />
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
 </head>
 
 
@@ -62,7 +63,6 @@ include("./php/conexion.php")
                         <h6 class="collapse-header">Administration</h6>
                         <a class="collapse-item " href="proyectos.php">Project management</a>
                         <a class="collapse-item" href="materiales.php">Purchase management</a>
-                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                         <a class="collapse-item" href="reportesP.php">Projects/Provider Reports</a>
                     </div>
                 </div>
@@ -114,6 +114,7 @@ include("./php/conexion.php")
                         <h6 class="collapse-header">Administrar</h6>
                         <a class="collapse-item " href="empleados.php">Employees</a>
                         <a class="collapse-item" href="labor.php">Work time</a>
+                        <a class="collapse-item" href="reportes.php">Employees Reports</a>
                     </div>
                 </div>
             </li>
@@ -198,7 +199,7 @@ include("./php/conexion.php")
                     <h1 class="h3 mb-4 text-gray-800">Projects</h1>
                     <div class="row">
                         <!-- Content Column -->
-                        <div class="col-lg-5 mb-4">
+                        <div class="col-lg-4 mb-4">
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -208,19 +209,19 @@ include("./php/conexion.php")
                                     <form id="ProyectosForm">
                                         <div class="form-group">
                                             <label for="inputAddress">Name Project*</label>
-                                            <input type="text" required class="form-control" id="name" name="name">
+                                            <input type="text" required class="form-control form-control-sm" id="name" name="name">
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Client</label>
-                                                <select class="form-control" id="client" name="client">
+                                                <select class="form-control form-control-sm" id="client" name="client">
                                                     <option disabled selected>Select Client</option>
                                                     <option disabled>Loading...</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Property</label>
-                                                <select class="form-control" disabled id="ProyectoSelectPropiedades"
+                                                <select class="form-control form-control-sm" disabled id="ProyectoSelectPropiedades"
                                                     name="ProyectoSelectPropiedades">
                                                     <option disabled selected>Seleccionar cliente</option>
                                                     <option disabled>Loading...</option>
@@ -228,30 +229,30 @@ include("./php/conexion.php")
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="inputEmail4">PO</label>
-                                                <input type="text" class="form-control" name="po">
+                                                <input type="text" class="form-control form-control-sm" name="po">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-3">
                                                 <label for="inputEmail4">Suite Number</label>
-                                                <input type="text" class="form-control" name="suite">
+                                                <input type="text" class="form-control form-control-sm" name="suite">
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label for="inputPassword4">Start Date</label>
-                                                <input type="text" class="form-control" name="start" id="start">
+                                                <input type="text" class="form-control form-control-sm" name="start" id="start">
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label for="inputPassword4">End Date</label>
-                                                <input type="text" class="form-control" name="end" id="end">
+                                                <input type="text" class="form-control form-control-sm" name="end" id="end">
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label for="inputPassword4">Invoice Code</label>
-                                                <input type="text" class="form-control" name="invoice" id="invoice">
+                                                <input type="text" class="form-control form-control-sm" name="invoice" id="invoice">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputAddress2">Notes</label>
-                                            <textarea class="form-control" name="notes"></textarea>
+                                            <textarea class="form-control form-control-sm" name="notes"></textarea>
                                         </div>
 
                                         <button id="New_button" type="submit"
@@ -264,7 +265,7 @@ include("./php/conexion.php")
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-7 mb-4">
+                        <div class="col-lg-8 mb-4">
                             <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -336,18 +337,20 @@ include("./php/conexion.php")
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <!-- <script src="js/jquery.mask.js"></script> -->
-    <script src="js/demo/datatables-demo.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
     <script src="js/request_handler.js"></script>
-
+ <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js">
+    </script>
+    <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js">
+    </script>
+    <script async type="text/javascript"
+        src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/b-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/datatables.min.js">
+    </script>
     <script>
     $(document).ready(function() {
         tablaProyecto();
@@ -356,7 +359,6 @@ include("./php/conexion.php")
         var from = $("#start")
             .datepicker({
                 dateFormat: "dd/mm/yy",
-                minDate: 0,
                 changeMonth: true
             })
             .on("change", function() {

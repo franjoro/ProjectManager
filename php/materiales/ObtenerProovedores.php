@@ -1,4 +1,3 @@
-<option disabled selected value="x">Seleccionar proovedor</option>
 <option value="0">*Proovedor generico</option>
 
 <?php

@@ -32,7 +32,8 @@ if (isset($_SESSION['user'])) {
         color: #888;
         line-height: 30px;
         text-align: center;
-        background: url('https://source.unsplash.com/1600x900/?construction');
+        background: url('https://images.unsplash.com/photo-1578907464594-fa58ed85c9b0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=1600');
+        
         background-position: top;
         background-repeat: no-repeat;
         background-size: 100% 100%;
