@@ -101,7 +101,7 @@ const NumeroDeTrabajoToday = () => {
       });
   },
   newAlmuerzo = (t, e) => {
-      console.log(e)
+      console.log(t)
     Swal.fire({
         title: "How long did you take for lunch ?",
       icon: "question",
@@ -109,60 +109,22 @@ const NumeroDeTrabajoToday = () => {
       inputAttributes: { min: 0, max: 60, step: 1 },
       inputValue: 30,
       preConfirm: async (o) => {
-        e = e.split(":");
-        let a = Number(60 * e[0]) + Number(e[1]);
-        nuevotiempo = ((a - o) / 60).toFixed(2).split(".");
-        let n = Math.round(0.6 * Number(nuevotiempo[1])),
-          r = `${nuevotiempo[0]}:${n}`;
-          alert(r);
-        await $.ajax({
-          url: "../php/edit.php",
+       const query =  await $.ajax({
+          url: "php/editAlmuerzo.php",
           type: "POST",
-          data: { tabla: "tb_labor", columna: "endtime", campo: r, code: t },
+          data: {columna1: "statusLunch", campo: o, code: t, columna2: "timeL" },
         });
         localStorage.setItem("almuerzo", getTodayDate()), location.reload();
-      },
+        console.log(query);
+      }
     });
   };
 $(document).ready(function () {
-  Swal.fire({
-    title: "Please Wait!",
-    html: "Loading data",
-    allowOutsideClick: !1,
-    onBeforeOpen: () => {
-      Swal.showLoading();
-    },
-  }),
-    $.ajax({ url: "php/cantidad.php?date=" + getTodayDate() }).done((t) => {
-      const e = (t = JSON.parse(t)).num;
-      let o,
-        a,
-        n = 0;
-      0 === e && NewWork(),
-        e > 0 &&
-          t.data.forEach((t, e) => {
-            let r = t.totalhoras.split(":");
-            r[0] >= 1 && ((o = t.code), (a = t.endtime)),
-              (n = Number(n) + Number(60 * r[0]) + Number(r[1])),
-              (numeroTotal = e + 1),
-              0 == t.status && WorkToRegiOut(e + 1, t),
-              1 == t.status &&
-                (WorkDone(e + 1, t),
-                (ShowIfExistSomething = !0),
-                numeroTotal++);
-          }),
-        n >= 300 &&
-          (localStorage.getItem("almuerzo") === getTodayDate()
-            ? $("#botones").append(
-                '<button class="btn btn-success"> <i class="fas fa-clipboard-check"></i> Lunch entered</button>'
-              )
-            : $("#botones").append(
-                `<button class="btn btn-info" onclick="newAlmuerzo('${o}', '${a}')">Add lunch time</button>`
-              )),
-        PutTimePicker(finichH);
-    }),
+  NumeroDeTrabajoToday();
     $("#fecha").text(getTodayDate());
 });
+
+
 let banderaDown = !1;
 $("#turno").on("focus", "#proyecto", function () {
   if (banderaDown) return;

@@ -2,7 +2,8 @@
 require_once('../conexion.php');
 
 if ($_GET['filter'] == 'empleados') {
-    $sql="SELECT tb_empleados.name,( SUM(HOUR(STR_TO_DATE( endtime,'%H:%i') )*60) + SUM(MINUTE(STR_TO_DATE(endtime,'%H:%i'))) ) - ( SUM(HOUR(STR_TO_DATE( startime,'%H:%i') )*60) + SUM(MINUTE(STR_TO_DATE(startime,'%H:%i'))) ) , tb_empleados.term, tb_empleados.rate FROM tb_labor INNER JOIN tb_empleados ON tb_empleados.code = tb_labor.codeEmpleado WHERE tb_labor.status=1 ";
+
+    $sql="SELECT tb_empleados.name,( SUM(HOUR(STR_TO_DATE( endtime,'%H:%i') )*60) + SUM(MINUTE(STR_TO_DATE(endtime,'%H:%i'))) ) - ( SUM(HOUR(STR_TO_DATE( startime,'%H:%i') )*60) + SUM(MINUTE(STR_TO_DATE(startime,'%H:%i'))) ) , tb_empleados.term, tb_empleados.rate, SUM(tb_labor.timeL)  FROM tb_labor INNER JOIN tb_empleados ON tb_empleados.code = tb_labor.codeEmpleado WHERE tb_labor.status=1 ";
     
     if ($_GET['codePro']!='All') {
         $sql2="AND codeProyecto=".$_GET['codePro'];
@@ -14,11 +15,18 @@ if ($_GET['filter'] == 'empleados') {
     $query = mysqli_query($mysqli, $sql);
     $columns = array();
     while ($row = mysqli_fetch_array($query)) {
+        $row[1] = $row[1]-$row[4];
         $h = floor($row[1]/60) ;
         $m = fmod($row[1],60);
 
+        $lh = floor($row[4]/60);
+        $lm = fmod($row[4],60);
+
+
         $date =null;
         $date = $h." Hours ".$m." Minutes";
+        $lunch = $lh." Hours ".$lm." Minutes";
+
         $pago ="";
         if ($row[2] != 0) {
             $pago ="Salary : $".$row[3];
@@ -26,7 +34,7 @@ if ($_GET['filter'] == 'empleados') {
             $procentajeDeHora =  number_format(((100*$m)/60)/100, 2);
             $pago  = "$".number_format(($h * $row[3])+($procentajeDeHora *$row[3]), 2);
         }
-        $columns[] =   array('Name_Empleado' => $row[0], 'TotalH'=>$date ,'Salary'=>$pago);
+        $columns[] =   array('Name_Empleado' => $row[0], 'TotalH'=>$date ,'Salary'=>$pago, 'lunch'=>$lunch, );
     }
     header('Content-Type: application/json');
     echo json_encode($columns);

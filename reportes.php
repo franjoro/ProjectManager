@@ -237,7 +237,7 @@ if (isset($_SESSION['user'])) {
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="responsive">
+                                    <div class="table-responsive">
                                         <table id="order_data" class="display responsive nowrap" style="width:100%">
                                         </table>
                                     </div>
@@ -258,7 +258,7 @@ if (isset($_SESSION['user'])) {
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="responsive">
+                                    <div class="table-responsive">
                                         <table id="order_data2" class="display responsive nowrap" style="width:100%">
                                         </table>
                                     </div>

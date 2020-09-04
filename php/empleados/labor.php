@@ -19,7 +19,7 @@ $empleado = $_GET['id'];
 $start = $_GET['entrada'];
 $end = $_GET['salida'];
 
-    $sql = "SELECT tb_labor.dateDay, tb_labor.startime, tb_labor.endtime, ( (HOUR(STR_TO_DATE( endtime,'%H:%i') )*60) + (MINUTE(STR_TO_DATE(endtime,'%H:%i'))) ) - ( (HOUR(STR_TO_DATE( startime,'%H:%i') )*60) + (MINUTE(STR_TO_DATE(startime,'%H:%i'))) ) , tb_proyectos.name, tb_labor.code , tb_empleados.term, tb_empleados.rate FROM tb_labor INNER JOIN tb_proyectos ON tb_labor.codeProyecto = tb_proyectos.code INNER JOIN tb_empleados ON  tb_labor.codeEmpleado = tb_empleados.code  WHERE tb_labor.dateDay BETWEEN '".$start."' AND '".$end."'  AND tb_labor.codeEmpleado = '".$empleado.":'  ";
+    $sql = "SELECT tb_labor.dateDay, tb_labor.startime, tb_labor.endtime, ( (HOUR(STR_TO_DATE( endtime,'%H:%i') )*60) + (MINUTE(STR_TO_DATE(endtime,'%H:%i'))) ) - ( (HOUR(STR_TO_DATE( startime,'%H:%i') )*60) + (MINUTE(STR_TO_DATE(startime,'%H:%i'))) ) , tb_proyectos.name, tb_labor.code , tb_empleados.term, tb_empleados.rate , tb_labor.statusLunch , tb_labor.timeL FROM tb_labor INNER JOIN tb_proyectos ON tb_labor.codeProyecto = tb_proyectos.code INNER JOIN tb_empleados ON  tb_labor.codeEmpleado = tb_empleados.code  WHERE tb_labor.dateDay BETWEEN '".$start."' AND '".$end."'  AND tb_labor.codeEmpleado = '".$empleado.":'  ";
 $query = mysqli_query($mysqli, $sql);
 while ($row = mysqli_fetch_array($query)) {
     $code = $row[5];
@@ -27,9 +27,18 @@ while ($row = mysqli_fetch_array($query)) {
     if ($row[6] == '1') {
         $totalHora = "Salary";
     } else {
+
+        if($row[8] == '1'){
+            $row[3] = $row[3]-$row[9];
+        $h = floor($row[3]/60) ;
+        $m = fmod($row[3], 60);
+        $date = $h." Hours ".$m." Minutes / ".$row[9]."Minutes of Lunch";
+        }else{
         $h = floor($row[3]/60) ;
         $m = fmod($row[3], 60);
         $date = $h." Hours ".$m." Minutes";
+        }
+
 
 
         if ($row[6] != 0) {
@@ -38,7 +47,9 @@ while ($row = mysqli_fetch_array($query)) {
             $procentajeDeHora =  number_format(((100*$m)/60)/100, 2);
             $pago  = "$".number_format(($h * $row[7])+($procentajeDeHora *$row[7]), 2);
         }
-    } ?>
+    } 
+    
+    ?>
         <tr>
             <td data-start="<?php echo $row[1]?>" data-end="<?php echo $row[2]?>" data-empleado="<?php echo $empleado?>"
                 data-code="<?php echo $code?>">
